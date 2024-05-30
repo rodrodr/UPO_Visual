@@ -1,0 +1,28 @@
+project:
+  type: website
+  output-dir: docs
+  render:
+    - "*.qmd"
+    
+website:
+  title: "Visualización de datos en R"
+  sidebar:
+    contents:
+      - href: index.qmd
+        text: Introducción al curso
+
+execute:
+  warning: false
+  message: false
+  error: false
+
+format:
+  html:
+    theme: pulse
+    css: styles.css
+    toc: true
+    code-fold: show
+  
+
+editor: source
+

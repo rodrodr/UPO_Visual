@@ -1,0 +1,51 @@
+[
+  {
+    "objectID": "about.html",
+    "href": "about.html",
+    "title": "About",
+    "section": "",
+    "text": "About this site\n\n\nCode\n1 + 1\n\n\n[1] 2"
+  },
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "VisualizaRVisualización de datos en R",
+    "section": "",
+    "text": "Esta página web forma parte del curso “Análisis de textos literarios con R”. En ella, se recogen los materiales y ejemplos que se desarrollarán durante las sesiones."
+  },
+  {
+    "objectID": "index.html#el-curso",
+    "href": "index.html#el-curso",
+    "title": "VisualizaRVisualización de datos en R",
+    "section": "",
+    "text": "Esta página web forma parte del curso “Análisis de textos literarios con R”. En ella, se recogen los materiales y ejemplos que se desarrollarán durante las sesiones."
+  },
+  {
+    "objectID": "index.html#los-profesores",
+    "href": "index.html#los-profesores",
+    "title": "VisualizaRVisualización de datos en R",
+    "section": "Los profesores",
+    "text": "Los profesores\nRodrigo Rodrigues-Silveira \nrodrodr@usal.es\nProfesor de ciencia política de la USAL. Director del proyecto “Comportamiento legislativo y erosión democrática en América Latina” (PELA Comportamiento).\n\nSheila Pastor\nsheilap@usal.es\nProfesora de literatura hispanoamericana de la USAL…"
+  },
+  {
+    "objectID": "index.html#el-contenido",
+    "href": "index.html#el-contenido",
+    "title": "VisualizaRVisualización de datos en R",
+    "section": "El contenido",
+    "text": "El contenido\nDurante el curso se abordarán los siguientes temas:\n\npreparación de textos literarios para análisis cuantitativos\nanálisis de frecuencias de palabras\ncodificación temática\nanálisis de conglomerados clusters\nescalonado de textos (uni y multidimensional)\nmodelage de tópicos\nanálisis de redes sociales\ntécnicas de visualización de texto"
+  },
+  {
+    "objectID": "index.html#sesiones",
+    "href": "index.html#sesiones",
+    "title": "VisualizaRVisualización de datos en R",
+    "section": "Sesiones",
+    "text": "Sesiones\nLas sesiones tendrán lugar en el etéreo espacio de la nube, en la plataforma Zoom. Los enlaces de acceso a las sesiones se enviarán a los correos electrónicos de los participantes.\nDÍA 1 - 04/05/2024 de 10 a 14h\nDÍA 2 - 13/05/2024 de 10 a 14h"
+  },
+  {
+    "objectID": "index.html#servicio-técnico",
+    "href": "index.html#servicio-técnico",
+    "title": "VisualizaRVisualización de datos en R",
+    "section": "🤖 Servicio técnico 🤖",
+    "text": "🤖 Servicio técnico 🤖\nPara que podáis reproducir los ejemplos de análisis presentados durante el curso debéis instalar en vuestros ordenadores el R y el RStudio Desktop.\nTambién debéis ejecutar el siguiente código en R que instala los paquetes necesarios:\n\n\nCode\n# Crea un vector con los paquetes a instalar\npc &lt;- c(\"quanteda\",\"quanteda.textplots\",\n        \"quanteda.textmodels\",\"quanteda.textstats\",\n        \"stringi\",\"readr\",\"gutenbergr\",\"ggplot2\",\n        \"ggrepel\",\"reactable\",\"tidyverse\",\"devtools\",\n        \"egg\",\"network\",\"sna\",\"ggnetwork\")\n\n# Instala los paquetes\ninstall.packages(pc)\n\n# Instala el paquete tenet que no está en CRAN\ndevtools::install_github(\"rodrodr/tenet\", force=T)"
+  }
+]
