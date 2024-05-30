@@ -10,7 +10,14 @@ website:
     contents:
       - href: index.qmd
         text: Introducción al curso
-
+      - href: basico.qmd
+        text: Fundamentos
+      - href: recursos.qmd
+        text: Recursos útiles
+        
+  page-footer:
+    left: "&copy; Copyright 2024, Rodrigo Rodrigues-Silveira"
+    
 execute:
   warning: false
   message: false

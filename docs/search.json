@@ -7,6 +7,20 @@
     "text": "About this site\n\n\nCode\n1 + 1\n\n\n[1] 2"
   },
   {
+    "objectID": "basico.html",
+    "href": "basico.html",
+    "title": "Fundamentosde visualización de datos",
+    "section": "",
+    "text": "El documental de PBS “El arte de la visualización de datos” resulta muy informativo sobre la importancia de la visualización de datos:\n\n\nTodos los días vemos cómo se manipula la información para intentar convencer a la gente. Los gráficos no se quedan fuera de esa tendencia. El corto video abajo nos muestra algunas de las estrategias más comunes para descubrir intentos de mentir con gráficos:"
+  },
+  {
+    "objectID": "basico.html#por-qué-visualizar-datos",
+    "href": "basico.html#por-qué-visualizar-datos",
+    "title": "Fundamentosde visualización de datos",
+    "section": "",
+    "text": "El documental de PBS “El arte de la visualización de datos” resulta muy informativo sobre la importancia de la visualización de datos:\n\n\nTodos los días vemos cómo se manipula la información para intentar convencer a la gente. Los gráficos no se quedan fuera de esa tendencia. El corto video abajo nos muestra algunas de las estrategias más comunes para descubrir intentos de mentir con gráficos:"
+  },
+  {
     "objectID": "index.html",
     "href": "index.html",
     "title": "VisualizaRVisualización de datos en R",
@@ -21,11 +35,11 @@
     "text": "Esta página web forma parte del curso “Análisis de textos literarios con R”. En ella, se recogen los materiales y ejemplos que se desarrollarán durante las sesiones."
   },
   {
-    "objectID": "index.html#los-profesores",
-    "href": "index.html#los-profesores",
+    "objectID": "index.html#el-profesor",
+    "href": "index.html#el-profesor",
     "title": "VisualizaRVisualización de datos en R",
-    "section": "Los profesores",
-    "text": "Los profesores\nRodrigo Rodrigues-Silveira \nrodrodr@usal.es\nProfesor de ciencia política de la USAL. Director del proyecto “Comportamiento legislativo y erosión democrática en América Latina” (PELA Comportamiento).\n\nSheila Pastor\nsheilap@usal.es\nProfesora de literatura hispanoamericana de la USAL…"
+    "section": "El profesor",
+    "text": "El profesor\nRodrigo Rodrigues-Silveira \nrodrodr@usal.es\nProfesor de ciencia política de la USAL. Actualmente, en estancia de recualificación en la UPO (hasta agosto de 2024). Director del proyecto “Comportamiento legislativo y erosión democrática en América Latina” (PELA Comportamiento)."
   },
   {
     "objectID": "index.html#el-contenido",
@@ -49,10 +63,24 @@
     "text": "🤖 Servicio técnico 🤖\nPara que podáis reproducir los ejemplos de análisis presentados durante el curso debéis instalar en vuestros ordenadores el R y el RStudio Desktop.\nTambién debéis ejecutar el siguiente código en R que instala los paquetes necesarios:\n\n\nCode\n# Crea un vector con los paquetes a instalar\npc &lt;- c(\"ggplot2\",\"ggthemes\",\"ggrepel\",\"ggdist\",\n        \"ggiraph\",\"giraphExtra\")\n\n# Instala los paquetes\ninstall.packages(pc)\n\n# Instala el paquete tenet que no está en CRAN\n# (si ya no lo habéis instalado en el curso \n# anterior de introducción al R)\ndevtools::install_github(\"rodrodr/tenet\", force=T)"
   },
   {
-    "objectID": "index.html#el-profesor",
-    "href": "index.html#el-profesor",
-    "title": "VisualizaRVisualización de datos en R",
-    "section": "El profesor",
-    "text": "El profesor\nRodrigo Rodrigues-Silveira \nrodrodr@usal.es\nProfesor de ciencia política de la USAL. Actualmente, en estancia de recualificación en la UPO (hasta agosto de 2024). Director del proyecto “Comportamiento legislativo y erosión democrática en América Latina” (PELA Comportamiento)."
+    "objectID": "recursos.html",
+    "href": "recursos.html",
+    "title": "Recursosútiles para la visualización de datos",
+    "section": "",
+    "text": "Existen muchos proyectos que nos ayudan a crear visualizaciones de datos hermosas y efectivas. Algunos de ellos son recursos extremadamente útiles y repositorios de código disponibles para nosotros.\n\n\nLa página web Dataviz inspiration provee hermosos gráficos e historias de datos. Estos ejemplos curados nos ayudan a visualizar el potencial completo de la visualización de datos y a obtener algunas ideas que podemos usar para nuestros propios análisis. Uno de los ejemplos sobresalientes es Ailing Brussels, un análisis de la desigualdad en Bruselas por la revista belga de investigación Medór. El proyecto emplea mapas, gráficos, animación y una narrativa convincente a través de imágenes, textos y videos para describir la división espacial de Bruselas en cuanto a oportunidades y niveles de precariedad.\n\n\n\n\n\nVisite ambos sitios, Dataviz Inspirations y Ailing Brussels, para tener una maravillosa experiencia de las posibilidades de la visualización de datos.\n\n\n\nEl segundo recurso es el Proyecto Data to Viz. Es el resultado de un gran esfuerzo de sistematización. Yan Holtz, el creador, organizó gráficos según el tipo de datos o el tipo de análisis. Cada gráfico tiene su propia página explicando cómo y en qué ocasión se debe usar o evitar. También proporciona acceso a R Graph Gallery con código detallado que muestra cómo replicarlo en R.\n\n\n\n\n\n\n\n\nComo se mencionó anteriormente, esta página web es un repositorio que contiene código para que los usuarios reproduzcan muchos tipos diferentes de gráficos en R. ¿Cómo puedo hacer un gráfico de dispersión en R? Mire la galería y lo descubrirá. ¿Y un gráfico de barras? Lo mismo. Este es un lugar obligatorio para buscar cuando se aprende visualización de datos."
+  },
+  {
+    "objectID": "recursos.html#introducción",
+    "href": "recursos.html#introducción",
+    "title": "Recursosútiles para la visualización de datos",
+    "section": "",
+    "text": "Existen muchos proyectos que nos ayudan a crear visualizaciones de datos hermosas y efectivas. Algunos de ellos son recursos extremadamente útiles y repositorios de código disponibles para nosotros.\n\n\nLa página web Dataviz inspiration provee hermosos gráficos e historias de datos. Estos ejemplos curados nos ayudan a visualizar el potencial completo de la visualización de datos y a obtener algunas ideas que podemos usar para nuestros propios análisis. Uno de los ejemplos sobresalientes es Ailing Brussels, un análisis de la desigualdad en Bruselas por la revista belga de investigación Medór. El proyecto emplea mapas, gráficos, animación y una narrativa convincente a través de imágenes, textos y videos para describir la división espacial de Bruselas en cuanto a oportunidades y niveles de precariedad.\n\n\n\n\n\nVisite ambos sitios, Dataviz Inspirations y Ailing Brussels, para tener una maravillosa experiencia de las posibilidades de la visualización de datos.\n\n\n\nEl segundo recurso es el Proyecto Data to Viz. Es el resultado de un gran esfuerzo de sistematización. Yan Holtz, el creador, organizó gráficos según el tipo de datos o el tipo de análisis. Cada gráfico tiene su propia página explicando cómo y en qué ocasión se debe usar o evitar. También proporciona acceso a R Graph Gallery con código detallado que muestra cómo replicarlo en R.\n\n\n\n\n\n\n\n\nComo se mencionó anteriormente, esta página web es un repositorio que contiene código para que los usuarios reproduzcan muchos tipos diferentes de gráficos en R. ¿Cómo puedo hacer un gráfico de dispersión en R? Mire la galería y lo descubrirá. ¿Y un gráfico de barras? Lo mismo. Este es un lugar obligatorio para buscar cuando se aprende visualización de datos."
+  },
+  {
+    "objectID": "recursos.html#proyectos-hermosos",
+    "href": "recursos.html#proyectos-hermosos",
+    "title": "Recursosútiles para la visualización de datos",
+    "section": "Proyectos hermosos",
+    "text": "Proyectos hermosos\nEn esta sección, presentamos algunos proyectos que nos inspiran y nos muestran cómo la visualización de datos puede ser hermosa y efectiva.\n\nDear Data\nSe trata de un proyecto de dos diseñadoras, Giorgia Lupi y Stefanie Posavec, que consiste en enviar postales semanales con datos personales dibujados a mano. Cada semana, durante un año, las dos diseñadoras recopilaron datos sobre sus vidas cotidianas y los representaron en postales. El proyecto resultante es una colección de visualizaciones de datos dibujadas a mano que revelan la belleza de los datos y la creatividad de las diseñadoras. El proyecto también se convirtió en un libro, Dear Data, que recopila las postales y las visualizaciones de datos.\nUn breve video explicando el proyecto:\n\nLa metodología empleada explicada con más detalle:\n\n\n\n\nEspaña vive en pisos (El Diario.es)\nEste proyecto de El Diario.es es un ejemplo de cómo la visualización de datos puede ser utilizada para contar historias complejas. El proyecto visualiza la distribución de la población en España y cómo la mayoría de la gente vive en pisos. La visualización combina mapas, gráficos y narrativa para contar la historia de cómo la mayoría de la gente en España vive en pisos y cómo esto afecta a la calidad de vida y la desigualdad en el país.\nNo se trata de la única visualización premiada. A día de hoy, el periódico posee el equipo de periodismo de datos más destacado de España y uno de los más reconocidos a nivel internacional.\n\n\n\n\n\n\n\nEl Atlas de los ODS\nEl Atlas de los Objetivos de Desarrollo Sostenible (ODS) es un proyecto de la División de Datos del Banco Mundial que visualiza los datos de los ODS en un formato interactivo y accesible. El Atlas proporciona visualizaciones de datos sobre los 17 ODS y los 169 objetivos específicos de los ODS. Los datos se presentan en mapas, gráficos y tablas interactivas que permiten a los usuarios explorar los datos y comparar los indicadores de los ODS en diferentes países y regiones. El Atlas es una herramienta valiosa para los responsables de la toma de decisiones, los investigadores y el público en general que deseen comprender mejor los desafíos y las oportunidades relacionados con los ODS.\n\n\n\n\n\n\n\nPoppy field\nValentina D’Fillipo creó una visualización para conmemorar el centenario de la Primera Guerra Mundial. La visualización muestra la cantidad de soldados que murieron en las guerras ocurridas durante el período comprendido entre 1914 y 2014, representados por amapolas. La visualización es interactiva y permite a los usuarios explorar la cantidad de soldados que murieron en cada país y en cada año en las distintas guerras. La visualización es hermosa y efectiva, y nos recuerda la importancia de la visualización de datos para contar historias y evitar el olvido de eventos históricos importantes.\n\n\n\n\n\n\n\nVisual Cinnamon\nVisual Cinnamon es la página personal de la diseñadora visual Nadieh Bremer. Se trata de una fuente de inspiración para cualquier persona interesada en la visualización de datos. Nadieh es conocida por su estilo único y su habilidad para combinar datos y diseño de una manera hermosa y efectiva. Su portafolio incluye visualizaciones de datos sobre temas como la música, la astronomía y la historia.\nAlgunos ejemplos de su trabajo que me gustan particularmente:\n\nPatrimonio cultural intangible (UNESCO)\nSe trata de una visualización interactiva que muestra el patrimonio cultural intangible de la UNESCO. Incorpora diversos tipos de gráfico y nos permite sacar ideas de qué podemos hacer con diferentes tipos de dato.\n\n\n\n\n\n\n\n¿Por qué los gatos y perros…? (Google)\nEn esta visualización, Nadieh explora las preguntas más comunes sobre gatos y perros en Google. Nos recuerda la estructura jerárquica del lenguaje y cómo podemos representar las alternativas variantes de forma visualmente impactante y efectiva."
   }
 ]

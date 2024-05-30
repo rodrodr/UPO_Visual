@@ -1,0 +1,25 @@
+---
+title: "<b>Fundamentos</b><br>de visualización de datos"
+---
+
+
+
+## ¿Por qué visualizar datos?
+
+
+{{< video https://www.youtube.com/watch?v=xekEXM0Vonc >}}
+
+El documental de PBS "El arte de la visualización de datos" resulta muy informativo sobre la importancia de la visualización de datos:
+
+{{< video https://www.youtube.com/watch?v=AdSZJzb-aX8 >}}
+
+<br>
+
+Todos los días vemos cómo se manipula la información para intentar convencer a la gente. Los gráficos no se quedan fuera de esa tendencia. El corto video abajo nos muestra algunas de las estrategias más comunes para descubrir intentos de mentir con gráficos:
+
+{{< video https://www.youtube.com/watch?v=E91bGT9BjYk >}}
+
+
+
+
+
