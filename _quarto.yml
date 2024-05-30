@@ -5,7 +5,7 @@ project:
     - "*.qmd"
     
 website:
-  title: "Visualización de datos en R"
+  title: "VisualizaR"
   sidebar:
     contents:
       - href: index.qmd
