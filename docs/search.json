@@ -32,20 +32,27 @@
     "href": "index.html#el-contenido",
     "title": "VisualizaRVisualización de datos en R",
     "section": "El contenido",
-    "text": "El contenido\nDurante el curso se abordarán los siguientes temas:\n\npreparación de textos literarios para análisis cuantitativos\nanálisis de frecuencias de palabras\ncodificación temática\nanálisis de conglomerados clusters\nescalonado de textos (uni y multidimensional)\nmodelage de tópicos\nanálisis de redes sociales\ntécnicas de visualización de texto"
+    "text": "El contenido\nDurante el curso se abordarán los siguientes temas:\n\nIntroducción a la gramática de los gráficos\nDistintos tipos de gráficos\nGráficos y tipos de datos\nTemas y presentación visual de los gráficos\nGráficos interactivos en R"
   },
   {
     "objectID": "index.html#sesiones",
     "href": "index.html#sesiones",
     "title": "VisualizaRVisualización de datos en R",
     "section": "Sesiones",
-    "text": "Sesiones\nLas sesiones tendrán lugar en el etéreo espacio de la nube, en la plataforma Zoom. Los enlaces de acceso a las sesiones se enviarán a los correos electrónicos de los participantes.\nDÍA 1 - 04/05/2024 de 10 a 14h\nDÍA 2 - 13/05/2024 de 10 a 14h"
+    "text": "Sesiones\nLas sesiones tendrán lugar tanto en Edificio 10, Aula de Informática 1 del campus de la Universidad Pablo de Olavide como en el etéreo espacio de la nube, en la plataforma Blackboard. Los enlaces de acceso a las sesiones se enviarán a los correos electrónicos de los participantes.\nDÍA 1 - 03/06/2024 de 10 a 13h\nDÍA 2 - 05/06/2024 de 10 a 13h\nDÍA 2 - 06/06/2024 de 10 a 13h"
   },
   {
     "objectID": "index.html#servicio-técnico",
     "href": "index.html#servicio-técnico",
     "title": "VisualizaRVisualización de datos en R",
     "section": "🤖 Servicio técnico 🤖",
-    "text": "🤖 Servicio técnico 🤖\nPara que podáis reproducir los ejemplos de análisis presentados durante el curso debéis instalar en vuestros ordenadores el R y el RStudio Desktop.\nTambién debéis ejecutar el siguiente código en R que instala los paquetes necesarios:\n\n\nCode\n# Crea un vector con los paquetes a instalar\npc &lt;- c(\"quanteda\",\"quanteda.textplots\",\n        \"quanteda.textmodels\",\"quanteda.textstats\",\n        \"stringi\",\"readr\",\"gutenbergr\",\"ggplot2\",\n        \"ggrepel\",\"reactable\",\"tidyverse\",\"devtools\",\n        \"egg\",\"network\",\"sna\",\"ggnetwork\")\n\n# Instala los paquetes\ninstall.packages(pc)\n\n# Instala el paquete tenet que no está en CRAN\ndevtools::install_github(\"rodrodr/tenet\", force=T)"
+    "text": "🤖 Servicio técnico 🤖\nPara que podáis reproducir los ejemplos de análisis presentados durante el curso debéis instalar en vuestros ordenadores el R y el RStudio Desktop.\nTambién debéis ejecutar el siguiente código en R que instala los paquetes necesarios:\n\n\nCode\n# Crea un vector con los paquetes a instalar\npc &lt;- c(\"ggplot2\",\"ggthemes\",\"ggrepel\",\"ggdist\",\n        \"ggiraph\",\"giraphExtra\")\n\n# Instala los paquetes\ninstall.packages(pc)\n\n# Instala el paquete tenet que no está en CRAN\n# (si ya no lo habéis instalado en el curso \n# anterior de introducción al R)\ndevtools::install_github(\"rodrodr/tenet\", force=T)"
+  },
+  {
+    "objectID": "index.html#el-profesor",
+    "href": "index.html#el-profesor",
+    "title": "VisualizaRVisualización de datos en R",
+    "section": "El profesor",
+    "text": "El profesor\nRodrigo Rodrigues-Silveira \nrodrodr@usal.es\nProfesor de ciencia política de la USAL. Actualmente, en estancia de recualificación en la UPO (hasta agosto de 2024). Director del proyecto “Comportamiento legislativo y erosión democrática en América Latina” (PELA Comportamiento)."
   }
 ]
