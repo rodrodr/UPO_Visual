@@ -1,0 +1,150 @@
+---
+title: "<b>Gramática</b><br>de los gráficos"
+bibliography: references.bib
+---
+
+```{r setup, include=FALSE}
+
+# Carga las librerías
+library(reactable)
+
+```
+
+## Introducción
+
+{{< video https://www.youtube.com/watch?v=RCaFBJWXfZc >}}
+
+
+
+## Gráficos por capas
+
+La mejor manera de pensar en la gramática de los gráficos es a partir de una estructura de capas. Cada capa de un gráfico es un componente independiente que se puede modificar y combinar con otras capas para crear un gráfico más complejo. La figura abajo nos brinda una representación visual de la gramática de los gráficos:
+
+![](figures/grammar.png)
+
+En la base se encuentra la capa de **datos**. Cualquier visualización depende fundamentalmente de la información que se desea comunicar. Esta capa condiciona todo lo que viene después.
+
+Imaginemos nuestra base de datos **w** con los datos de los países. Queremos crear un diagrama de dispersión para analizar la relación entre la esperanza de vida (*lifeex_total*) y el nivel de democracia (*dem_score14*). imaginemos que queremos contrastar esas dos variables con el IDH (*hdi*) y el nivel del PIB per cápita (*gdpcap3_08*). La capa de **datos** se vería así:
+
+```{r}
+
+# Carga los datos
+library(poliscidata)
+
+# Crea una base w a partir
+# de la original world
+w <- world
+
+# Visualiza el nombre del país,
+# la esperanza de vida y el nivel
+# de democracia
+reactable(w[, c("country", "lifeex_total", "dem_score14","hdi","gdpcap3_08")])
+
+
+```
+
+Esta sería nuestra capa de **datos**. Tenemos cinco variables, dos en formato texto (factor) y dos numéricas: el nombre del país, la esperanza de vida, el nivel de democracia, el IDH y la desigualdad de género. 
+
+```{r}
+
+# Carga el paquete
+library(ggplot2)
+
+# Crea la capa de datos 
+p <- ggplot(w)
+
+```
+
+
+La siguiente capa es la de **estética**. En esta capa se definen las variables que se van a visualizar y cómo se van a visualizar. En nuestro caso, queremos visualizar la esperanza de vida en el eje x y el nivel de democracia en el eje y. Además, queremos que el tamaño de los puntos sea proporcional al IDH y que el color de los puntos sea proporcional al nivel de PIB per cápita. La capa de **estética** se vería así:
+
+```{r}
+
+# Cargamos el paquete ggplot2
+# sin él, no hay juego
+library(ggplot2)
+
+# Crea un diagrama de dispersión
+# para la relación entre la esperanza
+# de vida y el nivel de democracia
+# con el IDH establecido como tamaño 
+# y la desigualdad de género como color
+# Añade la capa de estética
+p <- p + 
+     aes(x=lifeex_total,
+         y=dem_score14,
+         size=hdi,
+         color=gdpcap3_08)
+
+# visualiza el gráfico
+p
+
+```
+
+¡Pero no veo nada más que el fondo y los ejes! Claro, que no. Estás en el *backstage* todavía. Solo dijiste al R que querías visualizar la esperanza de vida en el eje x, el nivel de democracia en el eje y, el tamaño de los puntos proporcional al IDH y el color de los puntos proporcional a la desigualdad de género. Pero no le dijiste cómo querías visualizarlo. Para ello necesitas definir que tipo de representación visual quieres: pueden ser puntos, líneas, barras, florecitas, avioncitos... ¿Cómo el R va a adivinar lo que Ud.? Eso es lo que viene a continuación.
+
+```{r}
+
+# Añade la capa de geometría
+# que serán los puntos
+p <- p + geom_point()
+
+# Visualiza el gráfico
+p
+
+```
+
+<br>
+
+¡Ahora sí *habemus gráfico*! Pero, un gráfico que da miedo (ya lidiaremos con eso más tarde). Imaginemos que nos gustaría separar los países según regiones. Para ello, necesitamos una nueva capa: la capa de **facetas**. En esta capa, se definen las variables que se van a utilizar para separar los datos en diferentes paneles. En nuestro caso, queremos separar los países por regiones. La capa de **facetas** se vería así:
+
+```{r}
+
+# Añade la capa de facetas para
+# dividir el gráfico por regiones
+p <- p + facet_wrap(~regionun)
+
+# Visualiza el gráfico
+p
+
+```
+
+Como habéis visto, he ido añadiendo capas al gráfico y él estaba de lo más contento. Ahora quiero añadir alguna estadísticas chula que me permita visualizar mejor los resultados, como una elipse que circule los puntos de cada grupo de PIB per cápita. Lo hago por medio de una capa de **estadística**:
+
+```{r}
+
+# Añado la capa de estadística
+p <- p + stat_ellipse()
+
+# visualizo el gráfico
+p
+```
+
+Ya tengo muchos decorados. Ahora toca cambiar un poco la representación jugando con la capa de **coordenadas**.
+
+```{r}
+
+# Cambia las coordenadas
+# a polares
+p <- p + coord_polar()
+
+# Visualiza el gráfico
+p
+
+```
+
+
+¿Demasiado liado para ti? Para mi también, mi experimento no ha sido muy exitoso. No hay problema, volvemos al tipo de coordenadas anterior:
+
+```{r}
+
+# Superpone las coordenadas 
+# cartesianas a las anteriores
+p <- p + coord_cartesian()
+
+# Visualiza el gráfico
+p
+
+```
+
+
