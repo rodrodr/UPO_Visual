@@ -1,5 +1,5 @@
 ---
-title: "<b>Recursos</b><br>útiles para la visualización de datos"
+title: "<b>Recursos</b> <br>útiles para la visualización de datos"
 ---
 
 

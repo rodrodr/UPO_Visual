@@ -91,12 +91,85 @@ No obstante, si queremos comunicar de forma rápida y efectiva a un público que
 
 ### Huye de las plantillas de Excel, SPSS, Stata o R
 
-¡Pero, tampoco nos pasemos de dejados! Si examinamos una muestra de publicaciones científicas en las ciencias sociales resulta impresionante ver el poco cuidado estético que se tiene con los gráficos. Aunque no es necesario que sean obras de arte, sí es importante que sean atractivos y fáciles de leer. No es necesario que sean muy elaborados, pero sí que sean claros, efectivos y **atractivos**.
+¡Pero, tampoco nos pasemos de dejados! Si examinamos una muestra de publicaciones científicas en las ciencias sociales resulta impresionante ver el poco cuidado estético que se tiene con los gráficos. Aunque no es necesario que sean obras de arte, sí es importante que sean fáciles de leer y que aprovechen para informar lo mejor posible. No es necesario que sean muy elaborados, pero sí que sean claros, efectivos y **atractivos**.
 
 En la mayoría de los casos, los autores simplemente copian y pegan los resultados de Excel, SPSS o Stata (incluso R) en sus documentos sin preocuparse por cómo el perfeccionamento de elementos visuales como el color, el tipo de fuente o la disposición de los símbolos puede mejorar la comprensión de los datos. Un gráfico atractivo, además de limpio y efectivo, resulta agradable y llama la atención por el placer estético que produce en el observador. También es una forma de demostrar cierto estilo o sofisticación en el trabajo de un autor. Es como su "marca" personal. Es la impresión que suelo tener cuando veo un gráfico de diseñadoras como [Federica Fragapane](https://www.behance.net/FedericaFragapane), [Giorgia Lupi](https://giorgialupi.com/) o [Nadieh Bremer](https://www.visualcinnamon.com/). 
 
 Atraer la atención del lector no es cosa menor. Tenemos a nuestra disposición miles de artículos y libros para leer, y si no logramos captar la atención del lector, es probable que nuestro trabajo no sea leído. Gráficos bien acabados revelan atención al detalle y preocupación por la calidad del trabajo que se lleva a cabo. Utilizando una analogía con la moda, sería como hacer una "operación bikini" y luego ir a la playa en chándal de andar por casa.
 
 No digo que te conviertas en un diseñador para hacer un gráfico atractivo, pero sí es necesario tener en cuenta algunos principios básicos de diseño y visualización de datos. Existe una infinitud de manuales de visualización de datos con capítulos específicos sobre la elección de colores, fuentes, tamaños, formas, etc. Mi sugerencia es que consultéis algunas de esas obras para aprender los principios básicos, valerá mucho la pena [@brewer2005; @healy2019; @brewer2003; @yau2011; @yau2013; @tufte2001; @cleveland1993; @munzner2014; @few2004]. Veréis que a partir de cierto momento se empiezan a repetir los mismos consejos y recomendaciones. En ese instante, ya tendrás lo suficiente para aplicar en tus propios gráficos.
+
+```{r, echo=F,warning=F, message=F, fig.width=14, fig.height=8.4}
+
+
+library(poliscidata)
+library(ggplot2)
+library(ggthemes)
+library(patchwork)
+library(ggiraph)
+
+w <-world
+
+w$musulman <- ifelse(w$muslim=="Yes","Sí","No")
+
+w$tooltip <- paste0("<b>", w$country, "</b><br><br>",
+                    "Democracia: ", round(w$dem_score14,1), "<br>",
+                    "Desig. género: ", round(w$gender_unequal,2), "<br>",
+                    "Urbanización: ", round(w$pop_urban,1), "<br>",
+                    "Musulmán: ", ifelse(w$muslim=="Yes","Sí","No"), "<br>")
+
+
+p1 <- ggplot(w, aes(x = dem_score14, y = gender_unequal)) +
+  geom_point(size = 3) +
+  labs(title = "Democracia y desigualdad de género (Excel)",
+       x = "Democracia",
+       y = "Desigualdad de género")+
+  theme_excel()
+
+
+p2 <- ggplot(w, aes(x = dem_score14, y = gender_unequal)) +
+  geom_point(size = 3) +
+  labs(title = "Democracia y desigualdad de género (Stata)",
+       x = "Democracia",
+       y = "Desigualdad de género")+
+  theme_stata() +
+  scale_colour_stata("s2color")
+
+p3 <- ggplot(w, aes(x = dem_score14, y = gender_unequal)) +
+  geom_point(size = 3) +
+  labs(title = "Democracia y desigualdad de género (ggplot2)",
+       x = "Democracia",
+       y = "Desigualdad de género")
+
+
+p4 <- ggplot(w, aes(x = dem_score14, y = gender_unequal, color=musulman)) +
+  geom_point_interactive(aes(size=pop_urban, tooltip=tooltip)) +
+  labs(title = "**Democracia y desigualdad de género (propio)**",
+       subtitle="Datos para todos los países del mundo.",
+       caption="Fuente: elaboración propia con datos del paquete Poliscidata.",
+       x = "Democracia",
+       y = "Desigualdad de género")+
+  theme_classic()+
+  theme(plot.title = 
+          ggtext::element_markdown(size=14,
+                                   family="Helvetica"),
+        legend.position = "bottom")+
+  guides(color = guide_legend(title="Musulmanes"),
+         size = guide_legend(title="Urbanización"))+
+  scale_color_manual(values=c("red3","blue"))
+
+
+library(egg)
+
+ggarrange(p1,p2,p3,p4)
+
+girafe(ggobj = p4, width_svg = 8, height_svg = 6)
+
+
+```
+
+En el gráfico anterior, he comparado tres gráficos realizados con plantillas de Excel, Stata y ggplot2 con uno hecho por mí. Aunque los tres primeros gráficos son correctos y cumplen con su función, pueden mejorar mucho. 
+
+Añadimos dos variables más: urbanización para el tamaño y si se trata de un país de mayoría musulmana. Además, incorporamos un título en negrita, un subtítulo y una fuente. También hemos cambiado los colores y la posición de la leyenda y lo hemos convertido en una versión interactiva con un "tooltip" con los datos representados de forma detallada. 
 
 
