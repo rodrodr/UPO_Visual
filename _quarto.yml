@@ -16,7 +16,13 @@ website:
         text: Recursos útiles
       - href: gramatica.qmd
         text: Gramática de los gráficos
-        
+      - href: tipos.qmd
+        text: Tipos de gráfico
+      - href: personalizacion.qmd
+        text: Temas y personalización
+      - href: interactivo.qmd
+        text: Interactividad
+
         
   page-footer:
     left: "&copy; Copyright 2024, Rodrigo Rodrigues-Silveira"
@@ -33,6 +39,7 @@ format:
     toc: true
     code-fold: show
   
+bibliography: references.bib
 
 editor: source
 

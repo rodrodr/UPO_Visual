@@ -1,6 +1,5 @@
 ---
 title: "<b>Fundamentos</b><br>de visualización de datos"
-bibliography: references.bib
 ---
 
 ## ¿Por qué visualizar datos?

@@ -1,0 +1,616 @@
+---
+title: "<b>Tipos</b><br>de gráfico"
+bibliography: references.bib
+---
+
+```{r setup, include=FALSE}
+
+# Carga las librerías
+library(reactable)
+library(poliscidata)
+library(vdemdata)
+
+dem<- vdem
+
+dm <- dem[,c("country_name","year","v2x_polyarchy","v2x_libdem","v2x_partipdem","v2x_delibdem","v2x_egaldem")]
+
+names(dm) <- c("Country","Year","Electoral","Liberal","Participative","Deliberative","Egalitarian")
+
+d <- poliscidata::states
+
+w <- poliscidata::world
+
+Year <- c(1985:2019)
+
+Gini <- c(55.6,58.5,59.7,61.4,63.3,60.5,60.3,60.2,60.1,59.9,59.6,59.9,59.8,59.6,59.0,58.7,58.4,58.1,57.6,56.5,56.3,55.6,54.9,54.0,53.7,53.3,52.9,53.4,52.7,52.0,51.9,53.3,53.3,53.9,53.5)
+
+Administration <- c("Sarney","Sarney","Sarney","Sarney","Sarney","Collor","Collor","Collor","Itamar","Itamar","FHC","FHC","FHC","FHC","FHC","FHC","FHC","FHC","Lula","Lula","Lula","Lula","Lula","Lula","Lula","Lula","Dilma","Dilma","Dilma","Dilma","Dilma","Dilma","Temer","Temer","Bolsonaro")
+
+Growth <- c(7.9,7.5,3.5,-0.1,3.2,-4.4,1.0,-0.5,4.9,5.9,4.2,2.2,3.4,0.3,0.5,4.4,1.4,3.1,1.1,5.8,3.2,4.0,6.1,5.1,-0.1,7.5,4.0,1.9,3.0,0.5,-3.5,-3.3,1.3,1.8,1.2)
+
+GDP <- c(836,898,930,930,959,917,927,922,967,1024,1067,1090,1127,1131,1137,1186,1203,1240,1254,1326,1368,1423,1509,1586,1584,1703,1771,1805,1859,1868,1802,1743,1766,1798,1820)
+
+br <- data.frame(Year=Year, 
+                 GDP=GDP, 
+                 Growth=Growth, 
+                 Gini=Gini, 
+                 Administration=Administration)
+
+
+brs <- data.frame()
+
+for(i in 1:nrow(br)){
+  
+  if (i<nrow(br)){
+    k <- i+1
+  }else{
+    k <- i
+  }
+  
+  brs <- rbind(brs,
+               data.frame(
+                      x1=br$Year[i],
+                    xend=br$Year[k],
+                      y1=br$Gini[i],
+                      yend=br$Gini[k],
+ Administration=br$Administration[i])
+              )
+  
+}
+
+brs2 <- data.frame()
+
+for(i in 1:nrow(br)){
+  
+  if (i<nrow(br)){
+    k <- i+1
+  }else{
+    k <- i
+  }
+  
+  brs2 <- rbind(brs2,
+               data.frame(
+                      x1=br$GDP[i],
+                    xend=br$GDP[k],
+                      y1=br$Gini[i],
+                      yend=br$Gini[k],
+ Administration=br$Administration[i],
+                      Year=Year[i])
+              )
+  
+}
+
+di <- read.delim("https://www.dropbox.com/s/r8309gzg3rymajr/Visitas_Dilma_redux.csv?dl=1", sep=";", dec=",")
+
+di <- unique(di[,c("NOM_O","NOM_D","FREQ","VISITS")])
+
+names(di) <- c("Origin","Destination","Travels","Visits")
+
+
+ma <- read.delim("https://www.dropbox.com/s/85jyuirin4eirln/Visitas_Marina_redux.csv?dl=1", sep=";", dec=",")
+
+ma <- unique(ma[,c("NOM_O","NOM_D","FREQ","VISITS")])
+
+
+names(ma) <- c("Origin","Destination","Travels","Visits")
+
+library(netrankr)
+library(igraph)
+med <- florentine_m
+med <- as_edgelist(med)
+
+
+co <- c("Argentina","Bolivia","Brazil","Chile","Colombia","Costa Rica","Dominican Republic","Ecuador","Honduras","Mexico","Panama","Peru","Paraguay","El Salvador","Uruguay")
+
+dml <- dm[dm$Country%in%c(co,"Nicaragua","Venezuela"),]
+
+ye <- c(rep(2000,length(co)),rep(2010,length(co)),
+        rep(2020,length(co)))
+
+top <- c(37.7,47.8,47,42.6,47,35.7,40.2,45.9,41.9,42,43.2,36.8,42.1,39,35.4,31.7,36.9,42.2,38.2,43.4,36.8,36.5,37.5,40.2,37.1,39.7,34.2,40.5,33.2,33.6,30.3,32.6,39.4,35.8,42.2,37,30.5,36,34.6,35.5,38,32.9,33.3,29.8,29.9)
+
+lat <- data.frame(Country=c(co,co,co), Year=as.character(ye), Share=top)
+
+
+
+co <- c("Austria","Belgium","Bulgaria","Croatia","Czechia","Denmark","Estonia","Finland","France","Germany","Greece","Hungary","Ireland","Italy","Latvia","Lithuania","Luxembourg","Malta","Netherlands","Poland","Portugal","Romania","Slovakia","Slovenia","Spain","Sweden")
+
+ye <- c(rep(2000,length(co)),rep(2010,length(co)),
+        rep(2020,length(co)))
+
+
+top <- c(22.7,28.3,26.6,24.3,22.5,20.1,28.4,22.7,24.4,23,25.7,24.2,26.1,26.4,28.5,27.9,23.9,22.1,21.8,28.2,30.2,29,22.1,20.6,26.3,22.1,23.6,22.7,26.9,23.9,22.4,22.5,24.3,22.5,27.1,24.1,25.6,23.1,24.9,26.2,26.2,24.8,23.7,22.7,22.4,25.8,28.3,25,21.9,20.7,26,21.8,23.2,22.3,31.4,22.2,21.5,23.5,23.3,23,26.7,25.1,24.9,23.3,25.1,25.9,26.6,27.5,25.8,24.8,23.9,24,26,24.5,18.8,20.7,24.9,22.7)
+
+eu <- data.frame(Country=c(co,co,co), Year=as.character(ye), Share=top)
+
+dme <- dm[dm$Country%in%c(co,"Czech Republic"),]
+
+
+
+```
+
+## Introducción
+
+
+## Tipos de dato y tipos de gráficos
+
+asas
+
+
+## Frecuencia
+
+
+### Gráficos de barras
+
+
+```{r}
+
+library(poliscidata)
+
+d <- states
+
+# reordena de modo decreciente
+d$pot_policy <- reorder(
+                       d$pot_policy, 
+                       d$pot_policy, 
+                       function(x) -length(x))
+
+
+library(ggplot2)
+
+p <- ggplot(data = d,
+            mapping = aes(x=pot_policy)) + 
+        geom_bar()
+
+p
+
+p + coord_polar()
+
+
+```
+
+
+### Histograma
+
+
+```{r 01_hist, exercise=TRUE}
+
+library(ggplot2)
+
+# Creates the histogram of pop2010
+p <- ggplot(d, aes(pop2010))+
+  
+      # Adds the histogram geometry with 8 bins
+      geom_histogram(bins = 8)
+
+# Draws the histogram
+p
+
+```
+
+
+### Densidad
+
+```{r 01_dens, exercise=TRUE}
+
+library(ggplot2)
+
+# Creates the density plot of pop2010
+p <- ggplot(d, aes(pop2010))+
+  
+      # Adds the density geometry
+      geom_density()
+
+# Draws the density plot
+p
+
+```
+
+
+## Distribución
+
+
+### Boxplot y Violin 
+
+
+```{r}
+
+
+p <- ggplot(data = d,
+            mapping = aes(x=unemploy, 
+                          y=region,
+                          fill=region,
+                          group=region)) + 
+        geom_violin()+
+        geom_boxplot(width=0.1)
+
+p
+
+
+```
+
+
+
+### Lollipop
+
+
+```{r 01_lolli, exercise=TRUE}
+
+library(ggplot2)
+
+# Creates a sorted table of abort_rank3
+tb <- sort(table(d$abort_rank3))
+
+# Converts it in a data.frame to be passed to the ggplot function
+tb <- data.frame(tb)
+
+# Creates the lollipop
+p <- ggplot(tb, aes(y=Var1, x=Freq)) +
+  # adds red dots to the plot
+  geom_point(color="red") + 
+  
+  # Adds the segments
+  geom_segment( aes(y=Var1, yend=Var1, x=0, xend=Freq))
+
+# Draws the plot
+p
+
+```
+
+
+### Treemap
+
+A treemap is useful to represent proportions as areas or rectangles. The larger the area, the higher the frequency of a given category (represented by a rectangle). The main advantage of treemaps is that it allows to chart hierarchical data. Therefore, groups and subgroups within them can be visualized easily. Besides, treemaps allow to synthesize lots of data in relatively small space.
+
+```{r 01_tree, exercise=TRUE}
+
+# Loads the ggplot package
+library(ggplot2)
+
+# Loads the treemapify package
+library(treemapify)
+
+# Creates a sorted table of Marijuana laws
+tb <- sort(table(d$pot_policy))
+
+# Converts it in a data.frame to be passed to the ggplot function
+tb <- data.frame(tb)
+
+# Creates the treemap using the geometry **geom_treemap()** from the package treemapify
+
+# Initially, sets up the graph with area, color (fill), and label 
+p <- ggplot(tb, aes(area = Freq, fill = Var1, label=Var1)) +
+  
+  # Adds the treemap geometry to the graph
+  geom_treemap()
+
+# Draws (plots) the graph
+p
+
+```
+
+
+
+### BeeSwarm
+
+
+```{r 01_bee, exercise=TRUE, exercise.lines=25}
+
+w <- world
+
+# First of all, we need to load the packages
+library(ggplot2)        # For plotting
+library(ggbeeswarm)     # For the beeswarm 
+
+# Then, we create the plot, the data is w, and the 
+# variables: x=dem_level4 and y=pop_65_older, 
+# and fill=religoin (for color)
+p <- ggplot(data = w,
+            mapping = aes(x=dem_level4, 
+                          y=pop_65_older, 
+                          color=religoin)) 
+
+# We add the geometry with geom_quasirandom()
+p <- p + geom_quasirandom(size=1.5)
+
+# Now, we change the color scale, set a title for the
+# legend and 
+p <-  p + scale_color_brewer(palette = "Dark2", name="Religion")+
+    theme_light()  
+
+# Now, we need to add a title, the source, and the label for the axes
+p <- p + labs(title="Old Age, Regime Type, and Religion",
+              caption="Source: Package poliscidata.")+
+    xlab("Political Regime")+
+    ylab("65 years old or more (%)")
+
+# Plot the graph
+p
+
+```
+
+
+
+### Ridge Plot
+
+
+```{r 01_ridge, exercise=TRUE}
+
+# Loads the required libraries
+library(ggplot2)
+library(ggridges)
+
+# Creates the chart with the desired variables
+p <- ggplot(w,
+            aes(x=frac_eth, 
+                y=religoin, 
+                fill=religoin))
+
+# Adds the geometry to paint the ridges
+p <- p + geom_density_ridges()
+
+# Plots the results
+p
+
+```
+
+
+### Raincloud Chart
+
+
+
+```{r 01_rain, exercise=TRUE, exercise.lines=22}
+
+# First of all, we need to load the packages
+library(ggplot2)        # For plotting
+library(ggridges)      # For the geometry
+
+# Then, we create the plot, the data is w, and the 
+# variables: y=dem_level4 and x=pop_65_older, 
+# and fill=dem_level4 (for color)
+p <- ggplot(w,
+       aes(y = dem_level4, 
+           x = pop_65_older, 
+           fill = dem_level4)) 
+
+# Now we add the geometries 
+p <- p + geom_density_ridges(
+              jittered_points = TRUE, # Include dots
+              position = "raincloud", # Dots below
+              alpha=0.6,              # Color transparency
+              quantile_lines = TRUE)  # 25, 50, and 75 quantiles
+
+# Generates the chart
+p
+
+```
+
+
+## Asociación
+
+
+### Diagrama de dispersión
+
+
+
+
+
+## Conexión
+
+
+### Red
+
+```{r 03_net, exercise=TRUE, exercise.lines=32}
+
+di <- read.delim("https://www.dropbox.com/s/r8309gzg3rymajr/Visitas_Dilma_redux.csv?dl=1", sep=";", dec=",")
+
+di <- unique(di[,c("NOM_O","NOM_D","FREQ","VISITS")])
+
+names(di) <- c("Origin","Destination","Travels","Visits")
+
+
+# Loads the necessary packages
+library(ggplot2)
+library(ggnetwork)
+
+# Convert the data.frame in a network
+# layout
+n <- ggnetwork(di)
+
+# Creates the network only with links (edges)
+p <- ggplot(n, 
+       aes(x = x, 
+           y = y, 
+           xend = xend, 
+           yend = yend)) +
+  geom_edges(aes(size=Travels),
+             color = "red3", # Color of links/edges
+             alpha=0.1,           # transparency
+             curvature = 0.25)    # Curvature of links
+
+# Now, we add nodes/points to the grath
+p <- p + geom_nodes(aes(size=Visits), 
+            color="red3")
+
+# Now, the names of the visited cities
+p <- p + geom_nodetext_repel(aes(label = vertex.names))
+
+# Removes the theme and the legend
+p <- p + theme_blank() +
+         theme(legend.position = "none")
+
+# Plots the network
+p
+
+```
+
+
+## Tiempo / Flujo
+
+
+### Línea
+
+
+```{r 01_line, exercise=TRUE}
+
+# Prepares the plot
+p <- ggplot(br, 
+            aes(x=Year, y=Gini))+
+      geom_line()
+
+# Adds the labels
+p <- p + labs(title="Inequality in Brazil (1985-2019)", 
+              subtitle = "Gini Index for Income Inequality.",
+              caption = "World Development Indicators.")
+
+# Plots the results
+p
+
+
+```
+
+
+### Connected scatterplot
+
+
+```{r 03_line}
+
+# Loads the libraries
+library(ggplot2)
+library(ggrepel)
+
+# Creates the graph
+p <- ggplot(brs, 
+            aes(x=Year, 
+                y=Gini,
+                fill=Administration))
+
+# Adds the line segments for each administration
+p <- p + geom_segment(
+                      aes(x=x1,
+                          xend=xend,
+                          y=y1,
+                          yend=yend,
+                          color=Administration))
+
+# Changes the color
+p <- p + scale_color_brewer(palette = "Dark2")
+
+# Adds a title
+p <- p + labs(title = "Inequality in Democratic Brazil (1985-2019)")
+
+# Plots the results
+p
+
+```
+
+
+
+### Area
+
+
+```{r 01_area, exercise=TRUE}
+
+# Load packages
+library(ggplot2)
+
+# Prepares the plot
+p <- ggplot(br, 
+            aes(y=Growth, 
+                x=Gini))+
+      geom_area(fill="darkgreen")
+
+# Adds the labels
+p <- p + labs(title="Inequality in Brazil (1985-2019)", 
+              subtitle = "Gini Index for Income Inequality.",
+              caption = "World Development Indicators.")
+
+p <- p +theme_classic()
+
+# Plots the results
+p
+
+
+```
+
+
+
+### Dumbbell
+
+
+```{r 01_dumb, exercise=TRUE, fig.height=7, exercise.lines=47}
+
+# Loads the libraries
+library(ggplot2)
+
+# Get the order the countries from the highest to the
+# lowest share of the 10% in 2000.
+levels <- lat[
+              order(
+                lat$Share[lat$Year==2000], 
+                decreasing = T),
+              c("Country")]
+
+# Reorder the dataset according to the levels retrieved
+# before (important to have a nice looking chart)
+lat$Country <- factor(lat$Country, levels=levels)
+
+# Generates the basic plot
+p <- ggplot(lat,
+            aes(y=Country, 
+                x=Share))
+
+# Adds the line segments
+p <- p + geom_line(color="grey85")
+
+# Adds points and color them according to Year
+p <- p + geom_point(aes(color=Year))
+
+# Changes the color palette
+p <- p + scale_color_brewer(palette="Dark2")
+
+# Changes the theme
+p <- p + theme_classic()
+
+# Puts the legend at the bottom of the graph
+p <- p + theme(legend.position = "bottom")
+
+# Adds title, sutitle, and caption
+p <- p + labs(title = "The Richest 10% in Latin America (2000-2020)",
+              subtitle = "Change in the income share of the richest 10% in Latin America\nbetween 2000 and 2020.",
+              caption = "Source: World Bank, World Development Indicators.")
+
+# Changes the axes labels
+p <- p + xlab("Income Share (%)") +
+         ylab("")
+
+# Plots the chart
+p
+
+
+
+```
+
+
+
+
+### MAPA
+
+
+```{r}
+
+library(ggthemes)
+nc <- sf::st_read(system.file("shape/nc.shp", package = "sf"), quiet = TRUE)
+
+gg <- ggplot(nc) +
+  geom_sf(aes(fill = AREA))+
+  theme_map()+
+  scale_fill_continuous_tableau(palette="Purple")
+  
+  
+gg
+
+```
+
+
+
