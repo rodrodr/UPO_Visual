@@ -281,6 +281,66 @@ ggplotly(p)
 ## tenet
 
 
+### plotGrid
+
+```{r, fig.height=9, fig.width=8}
+
+# Carga los paquetes
+library(tenet)
+library(quanteda)
+
+# Crea un corpus con los 
+# discursos de investidura
+# de los presidentes españoles
+cp <- corpus(spa.inaugural)
+
+# Cuenta las palabras clave
+# del diccionario dic.pol.es 
+# que he preparado como ejemplo
+xz <- countKeywords(cp, 
+                    dic.pol.es, 
+                    rel.freq = T, 
+                    group.var = "President",
+                    quietly = TRUE)
+
+# Agrega las frecuencias por grupo
+# del diccionario
+xx <- aggregate(list(frequency=xz$frequency), 
+                by=list(groups=xz$groups,
+                        level1=xz$level1,
+                        level2=xz$level2), 
+                sum, na.rm=T)
+
+# Elimina los valores no
+# encontrados
+xx <- xx[xx$frequency>0,]
+
+# Ordena los valores por 
+# level1 y level2
+xx <- xx[order(xx$level1, 
+               xx$level2),]
+
+xx$level2 <- factor(xx$level2, 
+                    levels=unique(xx$level2))
+
+
+# Crea el gráfico (estandarizado)
+plotGrid(xx, 
+         x="groups", 
+         y="level2", 
+         size="frequency",
+         palette=pal$cat.brewer.Paired.12,
+         color="level1", 
+         standardize = TRUE,
+         interactive=TRUE,
+         height_svg = 9,
+         width_svg = 8,
+         leg.size = "Media (%)",
+         leg.color = "Categoría"
+         )
+
+```
+
 
 
 ## Otros paquetes
