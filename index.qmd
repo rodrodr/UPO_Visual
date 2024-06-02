@@ -8,7 +8,7 @@ title: "<b>VisualizaR</b><br>Visualización de datos en R"
 
 
 
-Esta página web forma parte del curso "Análisis de textos literarios con R". En ella, se recogen los materiales y ejemplos que se desarrollarán durante las sesiones.
+Esta página web forma parte del curso "Visualización de datos con R". En ella, se recogen los materiales y ejemplos que se desarrollarán durante las sesiones.
 
 
 ## El profesor
