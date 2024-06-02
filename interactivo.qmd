@@ -132,7 +132,61 @@ dme <- dm[dm$Country%in%c(co,"Czech Republic"),]
 ## Introducción
 
 
+## ggiraph
+
 asas
+
+
+```{r}
+
+library(poliscidata)
+
+w <- world
+
+# Crea un tooltip con algunos datos
+# del país
+w$tooltip_text <- paste0("<strong>", w$country, "</strong><br>",
+                         "<strong>Esperanza de vida:</strong> ",
+                         w$lifeex_total,
+                         "<br><strong>Democracia:</strong> ",
+                         w$dem_score14)
+
+
+library(ggthemes)
+library(ggplot2)
+library(ggiraph)
+
+# Capa de datos
+p <- ggplot(w)
+
+# Añade la capa de estética
+p <- p +
+   aes(x = lifeex_total, 
+       y = dem_score14,
+       data_id=regionun)
+
+# Añade la capa geométrica interactiva
+p <- p + geom_point_interactive(
+              aes(tooltip = tooltip_text)
+              )
+
+# Visualiza el gráfico interactivo
+x <- girafe(ggobj = p, 
+            options = 
+              list(
+                opts_hover_inv(css = "opacity:0.1;")
+              )
+            )
+
+x
+
+
+```
+
+
+
+
+
 
 
 ```{r}
@@ -142,7 +196,9 @@ library(ggthemes)
 library(ggplot2)
 library(ggiraph)
 
+
 nc <- sf::st_read(system.file("shape/nc.shp", package = "sf"), quiet = TRUE)
+
 
 gg <- ggplot(nc) +
   geom_sf_interactive(aes(fill = AREA, tooltip = NAME, data_id = NAME))+
@@ -151,7 +207,13 @@ gg <- ggplot(nc) +
   scale_fill_continuous_tableau(palette="Purple")
   
   
-x <- girafe(ggobj = gg)
+x <- girafe(ggobj = gg, 
+            options = 
+              list(
+                opts_hover(css = ''), 
+                opts_hover_inv(css = "opacity:0.1;")
+    )
+  )
 
 x
 
@@ -159,4 +221,51 @@ x
 ```
 
 
+
+
+## plotly
+
+
+
+```{r}
+
+library(plotly)
+library(ggplot2)
+
+# Capa de datos
+p <- ggplot(w)
+
+# Añade la capa de estética
+p <- p +
+   aes(x = lifeex_total, 
+       y = dem_score14,
+       fill=regionun)
+
+# Añade la capa geométrica
+p <- p + geom_point(color="transparent")
+
+ggplotly(p)
+
+```
+
+
+
+
+## Visnetwork
+
+
+
+## tenet
+
+
+
+
+## Otros paquetes
+
+
+NetworkD3
+
+leaflet
+
+tmap
 

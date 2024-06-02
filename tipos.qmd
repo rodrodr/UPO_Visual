@@ -131,39 +131,61 @@ dme <- dm[dm$Country%in%c(co,"Czech Republic"),]
 
 ## Introducción
 
+En esta parte del curso examinaremos algunos de los tipos más comunes de gráfico. Los organizaremos según el tipo de análisis que se desea realizar con ellos. Por ejemplo, si queremos saber si una variable cuantitativa afecta otra igual, realizamos un gráfico de dispersión o un correlograma. si el objetivo es saber la frecuencia de una variable categórica, un gráfico de barras puede ser la mejor opción.
 
 ## Tipos de dato y tipos de gráficos
 
-asas
+Cada tipo de gráfico suele corresponder a un tipo de dato o a una combinación entre tipos de dato. Por esa razón, resulta útil conocer la clasificación de los gráficos según los diferentes tipos de información para sacar los mejores resultados.
+
+La página [from Data to Viz](https://www.data-to-viz.com/){target="_blank"} resulta muy útil, pues ofrece una doble clasificación de los datos: por tipo de dato y el tipo de representación que se desea realizar. Recomiendo fuertemente que la estudiéis con detenimiento para tener una idea general de qué opciones tenéis. Luego, podréis regresar a la página para refrescar los conceptos y encontrar ejemplos, así como los códigos. Se trata de una herramienta muy útil a la hora de elegir el tipo de visualización que queremos para nuestros datos.
 
 
-## Frecuencia
+## Distribución
 
+Los gráficos de distribución son útiles para entender cómo se distribuyen los datos. ¿Cuál categoría es la más frecuente? ¿Los votos en un partido X en las mesas de Sevilla se encuentran concentrados alrededor de la media o varían mucho? Las visualizaciones de este apartado ayudan a responder a dichas preguntas. En este grupo se encuentran los histogramas, los gráficos de densidad, los diagramas de caja (*boxplots*) o los de violín (*violin*). 
 
 ### Gráficos de barras
 
+El gráfico de barras es uno de los más comunes y útiles. Se utiliza para representar la frecuencia de una variable categórica. Por ejemplo, si queremos saber cuántos votos ha obtenido cada partido en una elección, un gráfico de barras es la mejor opción. Esto nos permite comparar los valores y sacar conclusiones y patrones a partir de ellos.
+
+El código abajo crea un gráfico de barra para la variable *pot_policy* de la base de datos de los estados de EE. UU. La variable *pot_policy* representa la política relacionada a la legalización de la marijuana dominante en cada estado.
+
+Además, para no aburrirnos, también vamos a crear un gráfico de barras polar. Este tipo de gráfico es útil cuando queremos comparar la frecuencia de una variable categórica en un círculo. En este caso, la variable *pot_policy* se encuentra en el eje x y el eje y representa la frecuencia de cada categoría. Como veréis, se trata del mismo gráfico. Lo único que cambia es el sistema de coordenadas.
 
 ```{r}
 
+# Carga los datos
 library(poliscidata)
 
+# Crea un data.frame d
+# con los datos de los estados
 d <- states
 
-# reordena de modo decreciente
+
+# reordena de modo decreciente de 
+# la frecuencia
 d$pot_policy <- reorder(
                        d$pot_policy, 
                        d$pot_policy, 
                        function(x) -length(x))
 
-
+#
 library(ggplot2)
 
-p <- ggplot(data = d,
-            mapping = aes(x=pot_policy)) + 
-        geom_bar()
+# 1) Crea la capa de datos
+p <- ggplot(data = d)
 
+# 2 ) Añade la capa de estética
+p <- p + aes(x=pot_policy) 
+
+# 3) Añade la capa de geometría
+p <- p + geom_bar()
+
+# Visualiza el gráfico
 p
 
+# 4) Añade la capa de coordenadas 
+# (en este caso polares)
 p + coord_polar()
 
 
@@ -172,46 +194,78 @@ p + coord_polar()
 
 ### Histograma
 
+El histograma es una visualización muy útil para entender la distribución de una variable cuantitativa. Se divide en intervalos que contienen el número de observaciones (en nuestro caso estados) con valores entre los límites de cada uno de ellos.
+
+En el siguiente código, creamos un histograma para la variable *pop2010* de la base de datos de los estados de EE. UU. La variable *pop2010* representa la población de cada estado en el año 2010. 
+
 
 ```{r 01_hist, exercise=TRUE}
 
 library(ggplot2)
 
-# Creates the histogram of pop2010
+# Crea el histograma para pop2010
 p <- ggplot(d, aes(pop2010))+
   
-      # Adds the histogram geometry with 8 bins
+      # Adicional la geometría con 8 intervalos
       geom_histogram(bins = 8)
 
-# Draws the histogram
+# Visualiza
 p
 
 ```
 
+Como podemos ver, el patrón común de los datos de población se revela: muchos estados con poca población y unos pocos con mucha. Ese comportamiento suele pasar también en municipios, países, etc.
+
 
 ### Densidad
+
+El gráfico de densidad es similar al histograma, pero en lugar de contar el número de observaciones en un intervalo, muestra una curva que representa la densidad de probabilidad de la variable. En otras palabras, el área bajo la curva es igual a 1.
 
 ```{r 01_dens, exercise=TRUE}
 
 library(ggplot2)
 
-# Creates the density plot of pop2010
+# Crea el gráfico de densidad de pop2010
 p <- ggplot(d, aes(pop2010))+
   
-      # Adds the density geometry
+      # Adiciona la geometría de densidad
       geom_density()
 
-# Draws the density plot
+# Visualiza
 p
 
 ```
 
+Como vemos, la curva de densidad nos muestra que la mayoría de los estados tienen una población baja, pero hay algunos con una población muy alta. Se trata de la misma información que en el histograma anterior, pero no hay cortes bruscos como los generados por los intervalos. Esa característica evita posibles distorsiones ocasionadas por la elección del número o del tamaño de los intervalos.
 
-## Distribución
+### Boxplot
+
+Otro gráfico de distribución muy útil es el *boxplot*. Este gráfico muestra la distribución de una variable cuantitativa a través de cinco estadísticas: el mínimo, el primer cuartil, la mediana, el tercer cuartil y el máximo. Además, también muestra los valores atípicos (*outliers*). Se emplea para analizar la dispersión y la simetría de los datos. Un diagrama donde las partes son simétricas y la caja resulta muy pequeña indica que los datos están muy concentrados alrededor de la mediana. Por otro lado, una caja grande y asimétrica indica que los datos están dispersos y que hay una mayor dispersión hacia los mayores o menores valores.
 
 
-### Boxplot y Violin 
+El gráfico abajo crea un *boxplot* para la variable que mide el porcentaje de desempleo (*unemploy*) en cada estado. Para añadir valor, elegimos agrupar los estados por región para saber si existe algún patrón territorial en la distribución del paro en EE. UU.
 
+Los parámetros *fill* y *group* son necesarios para que el gráfico muestre una caja por cada región. En el primer caso, se atribuye un color a cada región y *group* se encarga de que cada región tenga su propia caja.
+
+
+```{r}
+
+p <- ggplot(data = d,
+            mapping = aes(x=unemploy, 
+                          y=region,
+                          fill=region,
+                          group=region)) + 
+        geom_boxplot(width=0.1)
+
+p
+
+```
+
+Vemos claramente dos patrones. De un lado, se encuentra el Oeste con estados con poco paro y otros con una tasa elevada. La dispersión resulta alta, tanto por los "bigotes" como por el tamaño de la caja. Además, los valores altos se encuentran más dispersos, pues la caja es más grande en la parte derecha. Por otro lado, el Noreste tiene una tasa de paro más concentrada, aunque la dispersión resulta mayor en la parte superior de la caja.
+
+### Violin plot
+
+El *violin plot* es una combinación de un *boxplot* y un *density plot*. Muestra la distribución de una variable cuantitativa y la densidad de probabilidad de la misma. Es útil para comparar distribuciones entre diferentes grupos. En el siguiente gráfico, creamos un *violin plot* para la variable *unemploy* (tasa de paro) agrupada por región. Vemos que resulta muy parecido al *boxplot* anterior, pero con la ventaja de mostrar la densidad de probabilidad de la variable, es decir, dónde se concentran los valores. Aprovechamos para añadir los puntos de cada observación con *geom_jitter*. Así queda más fácil entender por qué el gráfico tiene la forma que tiene.
 
 ```{r}
 
@@ -219,10 +273,9 @@ p
 p <- ggplot(data = d,
             mapping = aes(x=unemploy, 
                           y=region,
-                          fill=region,
                           group=region)) + 
         geom_violin()+
-        geom_boxplot(width=0.1)
+        geom_jitter(aes(color=region))
 
 p
 
@@ -230,29 +283,40 @@ p
 ```
 
 
-
 ### Lollipop
 
+
+El gráfico de *lollipop* es una variante del gráfico de barras. En lugar de barras, se utilizan segmentos de línea para representar las frecuencias de las categorías. Es útil cuando se quiere resaltar una categoría en particular. En el siguiente gráfico, creamos un *lollipop* para la variable *abort_rank3*, que representa la clasificación de los estados según su legislación sobre el aborto. 
+
+Mientras que en los casos anteriores, cada gráfico tenía una sola geometría, en el *lollipop* se combinan dos: *geom_point* (punto) y *geom_segment* (segmento de línea). Esta estrategia resulta muy común en la creación de visualizaciones originales y personalizadas. Dominar la combinación entre geometrías puede ser muy útil para crear gráficos más complejos y atractivos.
 
 ```{r 01_lolli, exercise=TRUE}
 
 library(ggplot2)
 
-# Creates a sorted table of abort_rank3
+# Crea una tabla ordenada con los
+# valores de abort_rank3
 tb <- sort(table(d$abort_rank3))
 
-# Converts it in a data.frame to be passed to the ggplot function
+# La convierte en base de datos
+# para la función ggplot
 tb <- data.frame(tb)
 
-# Creates the lollipop
-p <- ggplot(tb, aes(y=Var1, x=Freq)) +
-  # adds red dots to the plot
+# Crea el gráfico de lollipop
+p <- ggplot(tb, 
+            aes(y=Var1, 
+                x=Freq)) +
+  
+  # Añade los puntos rojos
   geom_point(color="red") + 
   
-  # Adds the segments
-  geom_segment( aes(y=Var1, yend=Var1, x=0, xend=Freq))
+  # Añade los segmentos
+  geom_segment( aes(y=Var1, 
+                    yend=Var1, 
+                    x=0, 
+                    xend=Freq))
 
-# Draws the plot
+# Dibuja el gráfico
 p
 
 ```
@@ -260,137 +324,173 @@ p
 
 ### Treemap
 
-A treemap is useful to represent proportions as areas or rectangles. The larger the area, the higher the frequency of a given category (represented by a rectangle). The main advantage of treemaps is that it allows to chart hierarchical data. Therefore, groups and subgroups within them can be visualized easily. Besides, treemaps allow to synthesize lots of data in relatively small space.
+Un *treemap* es un gráfico de proporciones representadas por áreas o rectángulos. Cuanto mayor sea el área, mayor será la frecuencia de una categoría dada (representada por un rectángulo). La principal ventaja de los *treemaps* es que permite representar datos jerárquicos. Por lo tanto, los grupos y subgrupos dentro de ellos pueden visualizarse fácilmente. Además, los *treemaps* permiten sintetizar muchos datos en un espacio relativamente pequeño.
+
 
 ```{r 01_tree, exercise=TRUE}
 
-# Loads the ggplot package
 library(ggplot2)
 
-# Loads the treemapify package
+# Carga el paquete treemapify
 library(treemapify)
 
-# Creates a sorted table of Marijuana laws
+# Crea una tabla ordenada con
+# las políticas de control de
+# la marijuana
 tb <- sort(table(d$pot_policy))
 
-# Converts it in a data.frame to be passed to the ggplot function
+# Convierte en base de datos
 tb <- data.frame(tb)
 
-# Creates the treemap using the geometry **geom_treemap()** from the package treemapify
+# Crea el treemap usando la
+# geometría geom_treemap()
+# del paquete teemapify
 
-# Initially, sets up the graph with area, color (fill), and label 
-p <- ggplot(tb, aes(area = Freq, fill = Var1, label=Var1)) +
+# Inicialmente, define
+# el gráfico con el área, color
+# y etiqueta
+p <- ggplot(tb, 
+            aes(area = Freq, 
+                fill = Var1, 
+                label=Var1)) +
   
-  # Adds the treemap geometry to the graph
+  # Añade la geometría de
+  # treemap al gráfico
   geom_treemap()
 
-# Draws (plots) the graph
+# Visualiza el resultado
 p
 
 ```
 
 
-
 ### BeeSwarm
 
+El gráfico de *beeswarm* es una variante del *scatter plot* que permite visualizar la distribución de una variable cuantitativa en función de una variable categórica. Es útil para comparar la distribución de una variable cuantitativa entre diferentes grupos. En el siguiente gráfico, creamos un *beeswarm* para la variable *pop_65_older* (población de 65 años o más) agrupada por el nivel de democracia de los países. Además, añadimos el color según la religión de los países.
+
+Como vemos, también se parece mucho al *violin plot* anterior. Sin embargo, el *beeswarm* tiene la ventaja de mostrar cada observación individual, lo que puede ser útil para detectar patrones o valores atípicos. Además, resulta más atractivo visualmente, pues los puntos no se superponen y se distribuyen de forma más uniforme. En este caso, añadimos la religión como información adicional para intentar encontrar algún patrón en los datos.
 
 ```{r 01_bee, exercise=TRUE, exercise.lines=25}
 
 w <- world
 
-# First of all, we need to load the packages
-library(ggplot2)        # For plotting
-library(ggbeeswarm)     # For the beeswarm 
+# Carga los paquetes necesarios
+library(ggplot2)        
+library(ggbeeswarm)      
 
-# Then, we create the plot, the data is w, and the 
-# variables: x=dem_level4 and y=pop_65_older, 
-# and fill=religoin (for color)
+# Crea el gráfico con el nivel de democracia
+# y la población de 65 años o más
+# con color según la religión
 p <- ggplot(data = w,
             mapping = aes(x=dem_level4, 
                           y=pop_65_older, 
                           color=religoin)) 
 
-# We add the geometry with geom_quasirandom()
+# Añadimos la geometría: geom_quasirandom()
 p <- p + geom_quasirandom(size=1.5)
 
-# Now, we change the color scale, set a title for the
-# legend and 
-p <-  p + scale_color_brewer(palette = "Dark2", name="Religion")+
-    theme_light()  
-
-# Now, we need to add a title, the source, and the label for the axes
-p <- p + labs(title="Old Age, Regime Type, and Religion",
-              caption="Source: Package poliscidata.")+
-    xlab("Political Regime")+
-    ylab("65 years old or more (%)")
-
-# Plot the graph
+# Visualizamos los resultados
 p
 
 ```
 
-
+Como vemos, las poblaciones de las democracias plenas presentan una mayor proporción de personas de 65 años o más. La autocracia, por otro lado, presenta una población más joven. Además, parece que la religión predominantes en los países con mayor proporción de personas de 65 años y más democráticos es  el cristianismo, mientras que los más jóvenes y autoritarios son en su mayor parte de mayoría musulmana. 
 
 ### Ridge Plot
 
+El gráfico de *ridge* es una variante del *density plot* que permite visualizar la distribución de una variable cuantitativa en función de una variable categórica. Es útil para comparar la distribución de una variable cuantitativa entre diferentes grupos. En el siguiente gráfico, creamos un *ridge* para la variable *frac_eth* (fracción de etnias) agrupada por la religión de los países.
 
 ```{r 01_ridge, exercise=TRUE}
 
-# Loads the required libraries
+# Carga los paquetes
 library(ggplot2)
 library(ggridges)
 
-# Creates the chart with the desired variables
+# Crea el gráfico
+# con la relación entre 
+# fraccionamiento étnico y religión
 p <- ggplot(w,
             aes(x=frac_eth, 
                 y=religoin, 
                 fill=religoin))
 
-# Adds the geometry to paint the ridges
+# Añade la capa de geometría
 p <- p + geom_density_ridges()
 
-# Plots the results
+# Visualiza los resultados
 p
 
 ```
 
+Como vemos, la distribución de la fracción étnica varía según la religión predominante en los países. Los países con mayoría musulmana presentan una mayor fracción étnica, mientras que los países con mayoría católica presentan una menor fracción étnica. Además, los países con mayoría musulmana presentan una distribución más dispersa, mientras que los países con mayoría budista presentan una distribución más concentrada. La categoría "otros cristianos" presenta una distribución más dispersa, con dos picos.
 
 ### Raincloud Chart
 
-
+El gráfico de *raincloud* resulta muy divertido. Combina un *violin plot*, un *box plot* y un *scatter plot* en un solo gráfico. Se llama así, porque las curvas de densidad se asemejan a nubes y los puntos dispersos representados abajo parecen gotas de lluvia. Como en versiones anteriores que hemos elaborado más arriba, tenemos una representación sintética (una curva que describe la densidad o el comportamiento de los datos) y unos puntos que representa la posición aproximada de cada observación. En el siguiente gráfico, creamos un *raincloud* para la variable *pop_65_older* (población de 65 años o más) agrupada por el nivel de democracia de los países.
 
 ```{r 01_rain, exercise=TRUE, exercise.lines=22}
 
-# First of all, we need to load the packages
-library(ggplot2)        # For plotting
-library(ggridges)      # For the geometry
+# Carga los paquetes
+library(ggplot2)
+library(ggridges)
 
-# Then, we create the plot, the data is w, and the 
-# variables: y=dem_level4 and x=pop_65_older, 
-# and fill=dem_level4 (for color)
+# Creamos el gráfico, los datos son w, y las
+# variables: y=dem_level4 y x=pop_65_older,
+# el color es fill=dem_level4
 p <- ggplot(w,
        aes(y = dem_level4, 
            x = pop_65_older, 
            fill = dem_level4)) 
 
-# Now we add the geometries 
+# Ahora adiciona la geometría, 
+# que incorpora los pujntos y
+# las líneas que identifica los
+# cuartiles
 p <- p + geom_density_ridges(
-              jittered_points = TRUE, # Include dots
-              position = "raincloud", # Dots below
-              alpha=0.6,              # Color transparency
-              quantile_lines = TRUE)  # 25, 50, and 75 quantiles
+              jittered_points = TRUE,
+              position = "raincloud",
+              alpha=0.6,                            
+              quantile_lines = TRUE)
 
-# Generates the chart
+# Visualiza el resultado
 p
 
 ```
 
 
-## Asociación
+## Asociación o correlación
 
 
 ### Diagrama de dispersión
 
+
+
+
+
+### Correlograma
+
+
+```{r}
+
+library(ggcorrplot)
+
+var <- c("gini10","dem_score14",
+         "literacy","lifeex_total",
+         "hdi","pop_urban","frac_eth",
+         "gdppcap08")
+
+corr <- round(cor(w[,var], 
+                  use="pairwise.complete.obs"), 
+              3)
+
+ggcorrplot(corr, 
+           lab_size = 3,
+           show.diag = F,
+           hc.order = T,
+           lab=T)
+
+
+```
 
 
 
@@ -402,44 +502,50 @@ p
 
 ```{r 03_net, exercise=TRUE, exercise.lines=32}
 
-di <- read.delim("https://www.dropbox.com/s/r8309gzg3rymajr/Visitas_Dilma_redux.csv?dl=1", sep=";", dec=",")
+di <- read.delim("https://www.dropbox.com/s/r8309gzg3rymajr/Visitas_Dilma_redux.csv?dl=1", 
+                 sep=";", 
+                 dec=",")
 
 di <- unique(di[,c("NOM_O","NOM_D","FREQ","VISITS")])
 
 names(di) <- c("Origin","Destination","Travels","Visits")
 
 
-# Loads the necessary packages
+# Carga los paquetes
 library(ggplot2)
 library(ggnetwork)
 
-# Convert the data.frame in a network
-# layout
+# Convierte la base de datos
+# en un layout de red
 n <- ggnetwork(di)
 
-# Creates the network only with links (edges)
+# Crea la red solo con los
+# vínculos (edges)
 p <- ggplot(n, 
        aes(x = x, 
            y = y, 
            xend = xend, 
            yend = yend)) +
   geom_edges(aes(size=Travels),
-             color = "red3", # Color of links/edges
-             alpha=0.1,           # transparency
-             curvature = 0.25)    # Curvature of links
+             color = "red3", 
+             alpha=0.1,           
+             curvature = 0.25)    
 
-# Now, we add nodes/points to the grath
+# Ahora, añade los nodos (puntos)
+# a la red anterior
 p <- p + geom_nodes(aes(size=Visits), 
             color="red3")
 
-# Now, the names of the visited cities
-p <- p + geom_nodetext_repel(aes(label = vertex.names))
+# Adiciona los nombres de las ciudades
+p <- p + geom_nodetext_repel(
+  aes(
+    label = vertex.names))
 
-# Removes the theme and the legend
+# Elimina el tema y la leyenda
 p <- p + theme_blank() +
          theme(legend.position = "none")
 
-# Plots the network
+# Visualiza los resultados
 p
 
 ```
@@ -453,17 +559,12 @@ p
 
 ```{r 01_line, exercise=TRUE}
 
-# Prepares the plot
+# Prepara el gráfico
 p <- ggplot(br, 
             aes(x=Year, y=Gini))+
       geom_line()
 
-# Adds the labels
-p <- p + labs(title="Inequality in Brazil (1985-2019)", 
-              subtitle = "Gini Index for Income Inequality.",
-              caption = "World Development Indicators.")
-
-# Plots the results
+# Visualiza los resultados
 p
 
 
@@ -475,17 +576,18 @@ p
 
 ```{r 03_line}
 
-# Loads the libraries
+# Carga los paquetes
 library(ggplot2)
 library(ggrepel)
 
-# Creates the graph
+# Crea el gráfico
 p <- ggplot(brs, 
             aes(x=Year, 
                 y=Gini,
                 fill=Administration))
 
-# Adds the line segments for each administration
+# Añade segmentos de línea para
+# cada gobierno
 p <- p + geom_segment(
                       aes(x=x1,
                           xend=xend,
@@ -493,13 +595,8 @@ p <- p + geom_segment(
                           yend=yend,
                           color=Administration))
 
-# Changes the color
-p <- p + scale_color_brewer(palette = "Dark2")
 
-# Adds a title
-p <- p + labs(title = "Inequality in Democratic Brazil (1985-2019)")
-
-# Plots the results
+# Visualiza los resultados
 p
 
 ```
@@ -511,23 +608,17 @@ p
 
 ```{r 01_area, exercise=TRUE}
 
-# Load packages
+# Carga los paquetes
 library(ggplot2)
 
-# Prepares the plot
+# Prepara el gráfico
 p <- ggplot(br, 
             aes(y=Growth, 
                 x=Gini))+
       geom_area(fill="darkgreen")
 
-# Adds the labels
-p <- p + labs(title="Inequality in Brazil (1985-2019)", 
-              subtitle = "Gini Index for Income Inequality.",
-              caption = "World Development Indicators.")
 
-p <- p +theme_classic()
-
-# Plots the results
+# Visualiza los resultados
 p
 
 
@@ -540,74 +631,67 @@ p
 
 ```{r 01_dumb, exercise=TRUE, fig.height=7, exercise.lines=47}
 
-# Loads the libraries
+# Carga los paquetes
 library(ggplot2)
 
-# Get the order the countries from the highest to the
-# lowest share of the 10% in 2000.
+# Obtiene el orden de los países según
+# la proporción de riqueza apropiada por
+# los 10% más ricos (de los más a los menos).
 levels <- lat[
               order(
                 lat$Share[lat$Year==2000], 
                 decreasing = T),
               c("Country")]
 
-# Reorder the dataset according to the levels retrieved
-# before (important to have a nice looking chart)
+# Reordena la base de datos según los niveles
+# obtenidos (esto es importante para que el 
+# gráfico salga bonito y fácil de interpretar)
 lat$Country <- factor(lat$Country, levels=levels)
 
-# Generates the basic plot
+# Genera el gráfico
 p <- ggplot(lat,
             aes(y=Country, 
                 x=Share))
 
-# Adds the line segments
+# Adiciona los segmentos de línea
+# conectando cada período
 p <- p + geom_line(color="grey85")
 
-# Adds points and color them according to Year
+# Añade puntos y los colorea de
+# acuerdo al año (Year)
 p <- p + geom_point(aes(color=Year))
 
-# Changes the color palette
-p <- p + scale_color_brewer(palette="Dark2")
-
-# Changes the theme
-p <- p + theme_classic()
-
-# Puts the legend at the bottom of the graph
-p <- p + theme(legend.position = "bottom")
-
-# Adds title, sutitle, and caption
-p <- p + labs(title = "The Richest 10% in Latin America (2000-2020)",
-              subtitle = "Change in the income share of the richest 10% in Latin America\nbetween 2000 and 2020.",
-              caption = "Source: World Bank, World Development Indicators.")
-
-# Changes the axes labels
-p <- p + xlab("Income Share (%)") +
-         ylab("")
-
-# Plots the chart
+# Visualiza los resultados
 p
-
-
 
 ```
 
 
 
 
-### MAPA
+### Mapa
 
 
 ```{r}
 
+# Carga los paquetes
 library(ggthemes)
-nc <- sf::st_read(system.file("shape/nc.shp", package = "sf"), quiet = TRUE)
+library(ggplot2)
+library(sf)
 
+# Carga los datos de
+# los condados de Carolina 
+# del Norte
+nc <- st_read(system.file("shape/nc.shp", 
+                          package = "sf"), 
+              quiet = TRUE)
+
+# Crea el gráfico y lo colorea
+# según el área
 gg <- ggplot(nc) +
-  geom_sf(aes(fill = AREA))+
-  theme_map()+
-  scale_fill_continuous_tableau(palette="Purple")
+  geom_sf(aes(fill = AREA))
   
-  
+# Visualiza los resultados  
 gg
 
 ```

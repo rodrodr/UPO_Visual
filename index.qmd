@@ -59,8 +59,12 @@ También debéis ejecutar el siguiente código en R que instala los paquetes nec
 
 # Crea un vector con los paquetes a instalar
 pc <- c("ggplot2","ggthemes","ggrepel","ggdist",
-        "ggiraph","giraphExtra","ggridges",
-        "vdemdata","sf","cowplot","poliscidata")
+        "ggiraph","giraphExtra","ggridges","dplyr",
+        "vdemdata","sf","cowplot","poliscidata",
+        "treemap","treemapify","plotly","networkD3",
+        "gapminder","patchwork","ggcorrplot",
+        "ggnetwork","ggridges","ggbeeswarm",
+        "netrankr","igraph","reactable")
 
 # Instala los paquetes
 install.packages(pc)

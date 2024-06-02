@@ -1,5 +1,5 @@
 ---
-title: "<b>Temas</b><br>y personalización"
+title: "<b>Apariencia</b><br>Personalización y temas"
 bibliography: references.bib
 ---
 
@@ -132,9 +132,33 @@ dme <- dm[dm$Country%in%c(co,"Czech Republic"),]
 ## Introducción
 
 
-asas
+## Personalización de los gráficos
+
+### Colores
+
+aa
+
+### Formas y símbolos
 
 
+aa
 
+
+### Títulos y etiquetas
+
+
+aa
+
+
+## Temas
+
+
+### Temas predefinidos
+
+aa
+
+### Personalización de los temas
+
+aa
 
 

@@ -19,7 +19,7 @@ website:
       - href: tipos.qmd
         text: Tipos de gráfico
       - href: personalizacion.qmd
-        text: Temas y personalización
+        text: Apariencia
       - href: interactivo.qmd
         text: Interactividad
 
