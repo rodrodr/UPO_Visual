@@ -132,6 +132,26 @@ dme <- dm[dm$Country%in%c(co,"Czech Republic"),]
 ## Introducción
 
 
+## Tipos de interacción
+
+### Tooltips
+
+Creación de un tooltip - html dentro de R
+
+
+### Cliques
+
+
+
+
+### Hover
+
+
+
+### Zoom
+
+
+
 ## ggiraph
 
 asas
@@ -201,7 +221,10 @@ nc <- sf::st_read(system.file("shape/nc.shp", package = "sf"), quiet = TRUE)
 
 
 gg <- ggplot(nc) +
-  geom_sf_interactive(aes(fill = AREA, tooltip = NAME, data_id = NAME))+
+  geom_sf_interactive(aes(fill = AREA, 
+                          tooltip = NAME, 
+                          data_id = NAME,
+                          onclick =  sprintf("window.open(\"http://en.wikipedia.org/wiki/%s_County,_North_Carolina\")", NAME)))+
   theme_map()+
   theme(legend.position = "none")+
   scale_fill_continuous_tableau(palette="Purple")
