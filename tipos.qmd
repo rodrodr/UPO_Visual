@@ -460,55 +460,124 @@ p
 
 ## Asociación o correlación
 
+Los gráficos de asociación o correlación son útiles para visualizar la relación entre dos o más variables cuantitativas. Nos ayudan a identificar los vínculos entre fenómenos medidos de forma continua y formular hipótesis sobre su relación.
+
 
 ### Diagrama de dispersión
 
+Un diagrama de dispersión o *scatterplot* es una de las formas más sencillas y efectivas de visualizar la relación entre dos variables cuantitativas. Cada punto en el gráfico representa una observación y su posición en los ejes x e y indica los valores de las dos variables. Resulta tan común que su interpretación es bastante intuitiva. Permite, además, que añadamos dos o tres variables más, como el color, el tamaño o la forma de los puntos, para representar información adicional.
+
+En el siguiente ejemplo, creamos un diagrama de dispersión para visualizar la relación entre la variable *hdi* (índice de desarrollo humano) y la variable *dem_score14* (puntuación de democracia). Además, coloreamos los puntos según la religión mayoritaria (*religoin*), cada continente (*regionun*) estará representado por una forma distinta y definiremos el tamaño empleando el porcentaje de personas con 65 años o más (*pop_65_older*).
+
+```{r}
+
+library(ggplot2)
+
+# Crea el gráfico
+p <- ggplot(w)
+
+# Capa estética con la religión
+# como color
+p <- p+ aes(x=hdi, 
+            y=dem_score14,
+            color=religoin,
+            size=pop_65_older,
+            shape=regionun)
 
 
+# Capa geométrica
+p <- p +geom_point()
 
+# Visualiza el gráfico
+p
 
-### Correlograma
+```
+
+Tenemos un gráfico verdaderamente horrible. No obstante, solo quería demostraros que es posible añadir más de dos variables a un diagrama de dispersión. En este caso, tenemos cinco: desarrollo humano, democracia, continente, religión y porcentaje de personas mayores de 65 años. Aunque se pueda hacer, como habéis visto, ni siempre es recomendable o útil. En este caso, la visualización resulta confusa y poco informativa. Por tanto, es mejor limitar el número de variables a dos o tres para que el gráfico sea más fácil de interpretar:
 
 
 ```{r}
 
+library(ggplot2)
+
+# Crea el gráfico
+p <- ggplot(w)
+
+# Capa estética con la religión
+# como color
+p <- p+ aes(x=hdi, 
+            y=dem_score14,
+            color=religoin)
+
+
+# Capa geométrica
+p <- p +geom_point()
+
+# Visualiza el gráfico
+p
+
+```
+
+
+### Correlograma
+
+¿Qué pasa cuando queremos comparar el grado de asociación entre muchas variables cuantitativas de una sola vez? En este caso, el correlograma es una herramienta muy útil. Un correlograma es una matriz en la que cada celda representa el coeficiente de correlación entre dos variables. Los valores de la correlación pueden variar entre -1 y 1. Un valor de 1 indica una correlación positiva perfecta, un valor de -1 indica una correlación negativa perfecta y un valor de 0 indica que no hay correlación entre las variables. Los correlogramas son útiles para identificar patrones de correlación entre variables y seleccionar las variables más relevantes para un análisis más detallado.
+
+En el siguiente ejemplo, creamos un correlograma para visualizar la correlación entre las variables *gini10*, *dem_score14*, *literacy*, *lifeex_total*, *hdi*, *pop_urban*, *frac_eth* y *gdppcap08*.
+
+```{r}
+
+# Carga el paquete necesario
 library(ggcorrplot)
 
+# Crea una lista de variables
+# de interés
 var <- c("gini10","dem_score14",
          "literacy","lifeex_total",
          "hdi","pop_urban","frac_eth",
          "gdppcap08")
 
+# Calcula la matriz de correlación
 corr <- round(cor(w[,var], 
                   use="pairwise.complete.obs"), 
               3)
 
+# Visualiza los resultados
 ggcorrplot(corr, 
            lab_size = 3,
            show.diag = F,
            hc.order = T,
            lab=T)
 
-
 ```
 
-
-
+El patrón que emerge resulta claro: el fraccionamiento étnico (*frac_eth*) y el índice de desigualdad de renta (*gini10*) están negativamente correlacionados con todas las demás variables (que presentan una asociación positiva). Es decir, la fraccionalización étnica y la desigualdad no "casan" muy bien con la riqueza (*gdppcap08*), la urbanización (*pop_urban*), el desarrollo humano (*hdi*), la esperanza de vida (*lifeex_total*), la alfabetización (*literacy*) o la democracia (*dem_score14*).
 
 ## Conexión
 
+Los gráficos de conexión son útiles para visualizar datos de red. Nos permiten representar las relaciones entre diferentes entidades (nodos) y las interacciones entre ellas (vínculos). Los gráficos de conexión son útiles para visualizar flujos de información, rutas de transporte, relaciones comerciales, interpersonales, etc.
 
 ### Red
 
+Un gráfico de red o **sociograma** es una representación visual de una red social. Se compone de dos unidades básicas: los nodos (o vértices) y los vínculos (o aristas). Los nodos son los puntos de la red y pueden representar a individuos, organizaciones, países, ciudades, etc. Los vínculos son las conexiones entre ellos y pueden señalar relaciones de amistad, colaboración, intercambio. Puede ser una red de ciudades, de empresas, de personas, de páginas web, entre muchos otras aplicaciones. 
+
+En el siguiente ejemplo, creamos un gráfico de red para visualizar los flujos de visitas de la presidenta Dilma Rousseff entre diferentes ciudades de Brasil durante el mes anterior a las elecciónes presidenciales de 2014. La base de datos contiene información sobre el número de visitas entre diferentes ciudades, así como el número total de viajes realizados. Se ha obtenido a partir del análisis de los periódicos que cubrieron la campaña electoral.
+
+
 ```{r 03_net, exercise=TRUE, exercise.lines=32}
 
+# Abre la base de datos
 di <- read.delim("https://www.dropbox.com/s/r8309gzg3rymajr/Visitas_Dilma_redux.csv?dl=1", 
                  sep=";", 
                  dec=",")
 
-di <- unique(di[,c("NOM_O","NOM_D","FREQ","VISITS")])
+# Seleccoiona las variables
+di <- unique(di[,c("NOM_O","NOM_D",
+                   "FREQ","VISITS")])
 
-names(di) <- c("Origin","Destination","Travels","Visits")
+
+names(di) <- c("Origen","Destino",
+               "Viajes","Visitas")
 
 
 # Carga los paquetes
@@ -519,21 +588,24 @@ library(ggnetwork)
 # en un layout de red
 n <- ggnetwork(di)
 
-# Crea la red solo con los
-# vínculos (edges)
+# Crea el gráfico con las
+# capas de datos y estética
 p <- ggplot(n, 
        aes(x = x, 
            y = y, 
            xend = xend, 
-           yend = yend)) +
-  geom_edges(aes(size=Travels),
-             color = "red3", 
-             alpha=0.1,           
-             curvature = 0.25)    
+           yend = yend))
 
-# Ahora, añade los nodos (puntos)
+# Añade la capa de vínculos (aristas)
+p <- p + geom_edges(
+          aes(size=Viajes),
+               color = "red3", 
+               alpha=0.1,           
+               curvature = 0.25)    
+
+# Ahora, añade los puntos (nodos)
 # a la red anterior
-p <- p + geom_nodes(aes(size=Visits), 
+p <- p + geom_nodes(aes(size=Visitas), 
             color="red3")
 
 # Adiciona los nombres de las ciudades
@@ -550,11 +622,19 @@ p
 
 ```
 
+Se observa que la candidata se desplaza principalmente entre las ciudades de São Paulo, Brasília, Río de Janeiro y Porto Alegre. Los constantes regresos a Brasília revelan la necesidad de conciliar las agendas de candidata con la de presidenta. Río y São Paulo, por su parte, son los principales centros económicos y políticos del país, mientras que Porto Alegre es la ciudad natal de la candidata. Vemos también que ha visitado otras ciudades, pero estas ocupan un lugar más periférico en la red.
 
-## Tiempo / Flujo
+
+## Tiempo / Flujo / Evolución
+
+Los gráficos de tiempo o flujo son útiles para visualizar la evolución de una variable a lo largo del tiempo. Nos permiten identificar tendencias, patrones y ciclos en los datos. Entre las aplicaciones posibles encontramos las series temporales, flujos de información, movimientos de población, entre otros.
 
 
 ### Línea
+
+El gráfico de líneas es una de las formas más comunes de visualizar datos temporales. Se compone de dos ejes: el eje horizontal representa el tiempo y el eje vertical la variable de interés. Se utiliza para visualizar la evolución de una variable a lo largo del tiempo, identificar tendencias, patrones y ciclos.
+
+El código abajo muestra cómo crear un gráfico de líneas para visualizar la evolución del índice de desigualdad de renta en Brasil entre 1985 y 2019. La base de datos contiene información sobre el índice de Gini en Brasil, así como el año correspondiente. Se ha obtenido a partir de la base de datos del Banco Mundial.
 
 
 ```{r 01_line, exercise=TRUE}
@@ -573,6 +653,7 @@ p
 
 ### Connected scatterplot
 
+El gráfico de dispersión conectado es una variante del gráfico de líneas que permite visualizar la relación entre dos variables a lo largo del tiempo. Se trata de conectar los puntos por medio de segmentos de línea para resaltar la evolución de la variable en el tiempo. El gráfico abajo muestra la evolución de la desigualdad en Brasil entre 1985 y 2019, pero ahora, marca los cambios de gobierno en el país.
 
 ```{r 03_line}
 
@@ -605,6 +686,8 @@ p
 
 ### Area
 
+El gráfico de área es una variante del gráfico de líneas que rellena el área entre la línea y el eje horizontal. El cambio puede parecer insignificante, pero posibilita la percepción de cambios importantes en volúmenes. En el ejemplo abajo, se muestra la evolución del crecimiento económico en Brasil entre 1985 y 2019.
+
 
 ```{r 01_area, exercise=TRUE}
 
@@ -614,7 +697,7 @@ library(ggplot2)
 # Prepara el gráfico
 p <- ggplot(br, 
             aes(y=Growth, 
-                x=Gini))+
+                x=Year))+
       geom_area(fill="darkgreen")
 
 
@@ -625,9 +708,9 @@ p
 ```
 
 
-
 ### Dumbbell
 
+El gráfico de pesas rusas (*dumbbell*) es una variante del gráfico de líneas que permite visualizar la evolución de dos variables a lo largo del tiempo. Se compone de dos o más puntos conectados por un segmento de línea. Es útil para comparar dos valores en diferentes momentos y visualizar la evolución de la variable en el tiempo. El gráfico abajo muestra la evolución de la proporción de la riqueza concentrada por el 10% más rico de en los países de América Latina en 2000, 2010 y 2019.
 
 ```{r 01_dumb, exercise=TRUE, fig.height=7, exercise.lines=47}
 
@@ -644,9 +727,10 @@ levels <- lat[
               c("Country")]
 
 # Reordena la base de datos según los niveles
-# obtenidos (esto es importante para que el 
+# obtenidos en 2000 (esto es importante para que el 
 # gráfico salga bonito y fácil de interpretar)
-lat$Country <- factor(lat$Country, levels=levels)
+lat$Country <- factor(lat$Country, 
+                      levels=levels)
 
 # Genera el gráfico
 p <- ggplot(lat,
@@ -664,12 +748,19 @@ p <- p + geom_point(aes(color=Year))
 # Visualiza los resultados
 p
 
+
 ```
 
+Se observa que la mayoría de los países han experimentado una reducción en la concentración de la riqueza en manos del 10% más rico, con excepción de Costa Rica, que ha experimentado un aumento en el mismo período. Resulta notable el caso de Bolivia, que ha experimentado una reducción significativa en la concentración de la riqueza en manos del 10% más rico en el período analizado, que pasa de ser el país más desigual al quinto menos desigual en la región en 2020.
 
 
+## Espacio
 
-### Mapa
+Los gráficos espaciales son útiles para visualizar la distribución geográfica de una variable. Nos permiten identificar patrones, tendencias y relaciones espaciales en los datos. Entre las aplicaciones posibles encontramos la distribución de la población, la concentración de la riqueza, la distribución de la pobreza, entre otros.
+
+### Mapa de coropletas
+
+Un mapa de coropletas es una forma de visualización espacial que consiste en colorear áreas geográficas de acuerdo a una variable de interés. Es útil para visualizar la distribución geográfica de una variable y compararla entre diferentes áreas. En el ejemplo abajo, se muestra la distribución de los condados de Carolina del Norte según su área. Los condados más grandes se muestran en tonos más oscuros, mientras que los más pequeños aparecen más claros.
 
 
 ```{r}
