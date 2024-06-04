@@ -204,7 +204,7 @@ p
 
 Finalmente, el tamaño representa la tercera variable visual que nos ocuparemos aquí. El parámetro `size`permite escalonar las observaciones del gráfico para que se destaquen en función de una variable numérica. En el siguiente gráfico de dispersión, empleamos el tamaño de los puntos para representar la población total de los países.
 
-```{r , fig.height=8, fig.width=6}
+```{r}
 
 library(ggplot2)
 
@@ -236,7 +236,7 @@ Las fuentes tipográficas pueden personalizar un gráfico y ayudar a convertirlo
 
 A continuación, mostramos cómo cambiar la fuente de un gráfico de dispersión con dos fuentes descargadas de Google Fonts: [**Griffy**](https://fonts.google.com/specimen/Griffy){target="_blank"} y [**Mr Bedfort**](https://fonts.google.com/specimen/Mr+Bedfort){target="_blank"}. Para ello, empleamos la función `theme` y `element_text` para cambiar la fuente de los elementos textuales del gráfico:
 
-```{r, fig.height=8, fig.width=6}
+```{r}
 
 p + theme(text=element_text(family="Griffy",
                             size=20,
