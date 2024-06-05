@@ -20,142 +20,161 @@ d <- poliscidata::states
 
 w <- poliscidata::world
 
-Year <- c(1985:2019)
-
-Gini <- c(55.6,58.5,59.7,61.4,63.3,60.5,60.3,60.2,60.1,59.9,59.6,59.9,59.8,59.6,59.0,58.7,58.4,58.1,57.6,56.5,56.3,55.6,54.9,54.0,53.7,53.3,52.9,53.4,52.7,52.0,51.9,53.3,53.3,53.9,53.5)
-
-Administration <- c("Sarney","Sarney","Sarney","Sarney","Sarney","Collor","Collor","Collor","Itamar","Itamar","FHC","FHC","FHC","FHC","FHC","FHC","FHC","FHC","Lula","Lula","Lula","Lula","Lula","Lula","Lula","Lula","Dilma","Dilma","Dilma","Dilma","Dilma","Dilma","Temer","Temer","Bolsonaro")
-
-Growth <- c(7.9,7.5,3.5,-0.1,3.2,-4.4,1.0,-0.5,4.9,5.9,4.2,2.2,3.4,0.3,0.5,4.4,1.4,3.1,1.1,5.8,3.2,4.0,6.1,5.1,-0.1,7.5,4.0,1.9,3.0,0.5,-3.5,-3.3,1.3,1.8,1.2)
-
-GDP <- c(836,898,930,930,959,917,927,922,967,1024,1067,1090,1127,1131,1137,1186,1203,1240,1254,1326,1368,1423,1509,1586,1584,1703,1771,1805,1859,1868,1802,1743,1766,1798,1820)
-
-br <- data.frame(Year=Year, 
-                 GDP=GDP, 
-                 Growth=Growth, 
-                 Gini=Gini, 
-                 Administration=Administration)
-
-
-brs <- data.frame()
-
-for(i in 1:nrow(br)){
-  
-  if (i<nrow(br)){
-    k <- i+1
-  }else{
-    k <- i
-  }
-  
-  brs <- rbind(brs,
-               data.frame(
-                      x1=br$Year[i],
-                    xend=br$Year[k],
-                      y1=br$Gini[i],
-                      yend=br$Gini[k],
- Administration=br$Administration[i])
-              )
-  
-}
-
-brs2 <- data.frame()
-
-for(i in 1:nrow(br)){
-  
-  if (i<nrow(br)){
-    k <- i+1
-  }else{
-    k <- i
-  }
-  
-  brs2 <- rbind(brs2,
-               data.frame(
-                      x1=br$GDP[i],
-                    xend=br$GDP[k],
-                      y1=br$Gini[i],
-                      yend=br$Gini[k],
- Administration=br$Administration[i],
-                      Year=Year[i])
-              )
-  
-}
-
-di <- read.delim("https://www.dropbox.com/s/r8309gzg3rymajr/Visitas_Dilma_redux.csv?dl=1", sep=";", dec=",")
-
-di <- unique(di[,c("NOM_O","NOM_D","FREQ","VISITS")])
-
-names(di) <- c("Origin","Destination","Travels","Visits")
-
-
-ma <- read.delim("https://www.dropbox.com/s/85jyuirin4eirln/Visitas_Marina_redux.csv?dl=1", sep=";", dec=",")
-
-ma <- unique(ma[,c("NOM_O","NOM_D","FREQ","VISITS")])
-
-
-names(ma) <- c("Origin","Destination","Travels","Visits")
-
-library(netrankr)
-library(igraph)
-med <- florentine_m
-med <- as_edgelist(med)
-
-
-co <- c("Argentina","Bolivia","Brazil","Chile","Colombia","Costa Rica","Dominican Republic","Ecuador","Honduras","Mexico","Panama","Peru","Paraguay","El Salvador","Uruguay")
-
-dml <- dm[dm$Country%in%c(co,"Nicaragua","Venezuela"),]
-
-ye <- c(rep(2000,length(co)),rep(2010,length(co)),
-        rep(2020,length(co)))
-
-top <- c(37.7,47.8,47,42.6,47,35.7,40.2,45.9,41.9,42,43.2,36.8,42.1,39,35.4,31.7,36.9,42.2,38.2,43.4,36.8,36.5,37.5,40.2,37.1,39.7,34.2,40.5,33.2,33.6,30.3,32.6,39.4,35.8,42.2,37,30.5,36,34.6,35.5,38,32.9,33.3,29.8,29.9)
-
-lat <- data.frame(Country=c(co,co,co), Year=as.character(ye), Share=top)
-
-
-
-co <- c("Austria","Belgium","Bulgaria","Croatia","Czechia","Denmark","Estonia","Finland","France","Germany","Greece","Hungary","Ireland","Italy","Latvia","Lithuania","Luxembourg","Malta","Netherlands","Poland","Portugal","Romania","Slovakia","Slovenia","Spain","Sweden")
-
-ye <- c(rep(2000,length(co)),rep(2010,length(co)),
-        rep(2020,length(co)))
-
-
-top <- c(22.7,28.3,26.6,24.3,22.5,20.1,28.4,22.7,24.4,23,25.7,24.2,26.1,26.4,28.5,27.9,23.9,22.1,21.8,28.2,30.2,29,22.1,20.6,26.3,22.1,23.6,22.7,26.9,23.9,22.4,22.5,24.3,22.5,27.1,24.1,25.6,23.1,24.9,26.2,26.2,24.8,23.7,22.7,22.4,25.8,28.3,25,21.9,20.7,26,21.8,23.2,22.3,31.4,22.2,21.5,23.5,23.3,23,26.7,25.1,24.9,23.3,25.1,25.9,26.6,27.5,25.8,24.8,23.9,24,26,24.5,18.8,20.7,24.9,22.7)
-
-eu <- data.frame(Country=c(co,co,co), Year=as.character(ye), Share=top)
-
-dme <- dm[dm$Country%in%c(co,"Czech Republic"),]
-
-
 
 ```
 
 ## Introducción
 
+Una de las grandes ventajas de la visualización de datos viene de la posibilidad de interactuar con los gráficos. En este sentido, la interactividad permite a los usuarios explorar los datos de manera más profunda, y a menudo, de una manera más intuitiva. En este capítulo veremos cómo crear gráficos interactivos en R a partir de un conjunto de paquetes especializados.
+
+
 
 ## Tipos de interacción
 
+Existen diferentes formas de interacción en los gráficos interactivos. En este curso exploraremos las siguientes: *tooltips*, cliques, *hover* (pasar el cursor sobre un elemento) y *zoom*. A continuación, describiremos cada una de ellas. 
+
 ### Tooltips
 
-Creación de un tooltip - html dentro de R
+Los *tooltips* son pequeñas ventanas emergentes que aparecen cuando el usuario pasa el ratón sobre un elemento interactivo. En estos *tooltips* se pueden mostrar datos adicionales que complementan la información que se muestra en el gráfico. En R, podemos crear *tooltips* con solamente definir una variable como contenido o crear versiones más complejas a partir de pocas líneas de código html.
+
+El código abajo muestra cómo crear dos gráficos de dispersión con *tooltips* en R. El primero con un *tooltip* simple y el segundo con uno más complejo. Para hacerlo emplearemos el paquete `ggiraph` y la geometría `geom_point_interactive`, que permite crear gráficos de dispersión interactivos.
+
+Primer gráfico: *tooltip* solo con el nombre del país.
+
+```{r}
+
+library(poliscidata)
+library(ggplot2)
+library(ggiraph)
+
+# Carga los datos
+w <- world
+
+# Genera el gráfico
+p <- ggplot(w, 
+            aes(x=lifeex_total, 
+                y=dem_score14))+
+    geom_point_interactive(
+            aes(tooltip=country))
+
+# Visualiza el gráfico
+# interactivo
+girafe(ggobj = p)
+
+```
+
+
+Segundo gráfico: *tooltip* simple con poco código html y datos de nuevas variables.
+
+```{r}
+
+# Versión A - Saltos de línea
+
+# Crea una variable en el data.frame
+# con el contenido del tooltip
+w$tooltip_text <- paste0("<h5 style='color:red;'><strong>", 
+                         w$country, "</strong></h5>",
+                         "<strong>Esperanza de vida:</strong> ",
+                         w$lifeex_total,
+                         "<br><strong>Democracia:</strong> ",
+                         w$dem_score14,
+                         "<br><strong>Religión:</strong> ",
+                         w$religoin)
+
+# Genera el gráfico
+p <- ggplot(w, 
+            aes(x=lifeex_total, 
+                y=dem_score14))+
+    geom_point_interactive(
+            aes(tooltip=tooltip_text))
+
+# Visualiza el gráfico
+# interactivo
+girafe(ggobj = p)
+
+```
+
+
+Tercer gráfico: *tooltip* más elaborado con una tabla html.
+
+```{r}
+
+# Versión B - tabla
+
+# Crea una variable en el data.frame
+# con el contenido del tooltip
+w$tooltip_text <- paste0("<style>.row{border-bottom:1px solid;}</style>",
+                        "<h5 style='color:red;'><strong>", 
+                         w$country, 
+                         "</strong></h5>",
+                         "<table>","
+                         <col width='180px' />",
+                         "<col width='40px' />",
+                         "<tr class='row' style='color:orange;'>",
+                         "<td>Esperanza de vida</td>",
+                         "<td>", round(w$lifeex_total,1),"</td>",
+                         "</tr>",
+                         "<tr class='row' style='color:yellow;'>",
+                         "<td>Democracia</td>",
+                         "<td>", round(w$dem_score14,1),"</td>",
+                         "</tr>",
+                         "<tr>",
+                         "<td valign='top'>Religión</td>",
+                         "<td>", w$religoin,"</td>",
+                         "</tr>",
+                         "</table>")
+
+# Genera el gráfico
+p <- ggplot(w, 
+            aes(x=lifeex_total, 
+                y=dem_score14))+
+    geom_point_interactive(
+            aes(tooltip=tooltip_text))
+
+# Visualiza el gráfico
+# interactivo
+girafe(ggobj = p)
+
+```
 
 
 ### Cliques
 
+La segunda forma de interacción que veremos es a través de cliques. En este caso, el usuario puede hacer clic en un elemento del gráfico y ser redirigido a una página web. En el siguiente ejemplo, al hacer clic en un país, se abrirá una página de Wikipedia con información sobre el país.
+
+En este caso, combinamos la instrucción `javascript`de windows.open(), con la dirección de la página de Wikipedia del país. Para ello, creamos una nueva variable en el `data.frame` con el código javascript direccionando a la página web. Luego, en la geometría `geom_point_interactive` añadimos la instrucción `onclick` con el nombre de la variable **click** que contiene el código javascript.
+
+```{r}
+
+# Retira las comillas simples
+# del nombre de los países
+w$country <- gsub("'"," ",w$country)
+
+# Crea un código para abrir la
+# página de wikipedia del país
+w$click <- sprintf(
+              paste0('window.open("http://en.wikipedia.org/wiki/', 
+                     w$country, 
+                     '")'))
 
 
+# Genera el gráfico
+p <- ggplot(w, 
+            aes(x=lifeex_total, 
+                y=dem_score14))+
+    geom_point_interactive(
+            aes(onclick=click,
+                tooltip=country))
+
+# Visualiza el gráfico
+# interactivo
+girafe(ggobj = p)
+
+```
 
 ### Hover
 
-
-
-### Zoom
-
-
-
-## ggiraph
-
-asas
-
+La tercera forma de interacción es a través del *hover*, que se activa al pasar el cursor sobre un elemento del gráfico. En este caso, se puede mostrar información adicional sobre el elemento sin necesidad de hacer clic. En el código abajo, al pasar el cursor sobre un país, se cambiará el color de los países de un mismo continente y los demás se pondrán semitransparentes.
 
 ```{r}
 
@@ -200,13 +219,70 @@ x <- girafe(ggobj = p,
 
 x
 
+```
+
+
+### Zoom
+
+La cuarta forma de interacción es a través del *zoom*, que permite al usuario acercar o alejar una parte del gráfico. En el siguiente ejemplo, se muestra un gráfico de dispersión con la posibilidad de hacer zoom en una región específica del gráfico por medio de un botón que aparecerá en la parte superior derecha.
+
+```{r}
+
+library(poliscidata)
+
+w <- world
+
+# Crea un tooltip con algunos datos
+# del país
+w$tooltip_text <- paste0("<strong>", w$country, "</strong><br>",
+                         "<strong>Esperanza de vida:</strong> ",
+                         w$lifeex_total,
+                         "<br><strong>Democracia:</strong> ",
+                         w$dem_score14)
+
+
+library(ggthemes)
+library(ggplot2)
+library(ggiraph)
+
+# Capa de datos
+p <- ggplot(w)
+
+# Añade la capa de estética
+p <- p +
+   aes(x = lifeex_total, 
+       y = dem_score14,
+       data_id=regionun)
+
+# Añade la capa geométrica interactiva
+p <- p + geom_point_interactive(
+              aes(tooltip = tooltip_text)
+              )
+
+# Visualiza el gráfico interactivo
+x <- girafe(ggobj = p, 
+            options = 
+              list(
+                opts_hover_inv(css = "opacity:0.1;"),
+                opts_zoom(min=1, max=3)
+              )
+            )
+
+x
+
 
 ```
 
 
+## Paquetes de gráficos interactivos
 
+En esta sección mencionaremos algunos de los paquetes de gráficos interactivos con los que podéis crear diferentes formas de visualización de datos. No se trata de un recuento exhaustivo, sino de una selección de paquetes que consideramos útiles y fáciles de usar. También menciono el paquete *tenet* que desarrollo para el análisis de textos en R, pero que contiene una serie de gráficos interactivos.
 
+### [ggiraph](https://www.ardata.fr/ggiraph-book/){target=_blank}
 
+El primer paquete que mencionaremos es `ggiraph`, que permite crear gráficos interactivos con la librería `ggplot2`. Este paquete es muy útil para crear gráficos con la misma sintaxis de `ggplot2`. Trabaja con geometrías interactivas, como `geom_sf_interactive`, `geom_point_interactive`, `geom_bar_interactive`, entre otras, que se comportan exactamente como sus contrapartes no interactivas, pero con la posibilidad de añadir interactividad. 
+
+Para activar la interactividad, se debe añadir la función `girafe()` al final del gráfico. En el siguiente ejemplo, se muestra un mapa interactivo hecho con ggiraph. Ahí queda evidente la sintaxe de ggplot2 y la facilidad de añadir interactividad a un gráfico.
 
 
 ```{r}
@@ -216,10 +292,13 @@ library(ggthemes)
 library(ggplot2)
 library(ggiraph)
 
+# Lee los datos de Carolina del Norte
+nc <- sf::st_read(system.file("shape/nc.shp", 
+                              package = "sf"), 
+                  quiet = TRUE)
 
-nc <- sf::st_read(system.file("shape/nc.shp", package = "sf"), quiet = TRUE)
-
-
+# Crea un gráfico interactivo, con tooltip,
+# hover y click
 gg <- ggplot(nc) +
   geom_sf_interactive(aes(fill = AREA, 
                           tooltip = NAME, 
@@ -229,7 +308,7 @@ gg <- ggplot(nc) +
   theme(legend.position = "none")+
   scale_fill_continuous_tableau(palette="Purple")
   
-  
+# Genera la versión interactiva  
 x <- girafe(ggobj = gg, 
             options = 
               list(
@@ -238,16 +317,19 @@ x <- girafe(ggobj = gg,
     )
   )
 
+# Visualiza el gráfico
 x
 
 
 ```
 
 
+### [plotly](https://plotly.com/ggplot2/){target=_blank}
+
+El paquete `plotly` es otro paquete muy útil para crear gráficos interactivos en R. Como `ggiraph`, Este paquete permite crear gráficos interactivos con la misma sintaxis de `ggplot2`, pero con la posibilidad de añadir interactividad. Además, `plotly` permite crear gráficos 3D, mapas, gráficos de barras, gráficos de dispersión, entre otros.
 
 
-## plotly
-
+Abajo vemos un ejemplo de un gráfico de dispersión interactivo hecho con `plotly`. En este caso, se añade un tooltip con información de cada punto y se añade un efecto de zoom para acercar o alejar una parte del gráfico.
 
 
 ```{r}
@@ -271,17 +353,90 @@ ggplotly(p)
 
 ```
 
+### [VisNetwork](https://datastorm-open.github.io/visNetwork/){target=_blank}
+
+Se trata de una librería de gráficos de redes interactivos. Permite crear gráficos de redes con nodos y enlaces, y añadir interactividad a través de zoom, arrastrar y soltar, y otros efectos. Permite mucho control de la interactividad y es muy útil para visualizar redes complejas.
 
 
+### [NetworkD3](https://christophergandrud.github.io/networkD3/){target=_blank}
 
-## Visnetwork
-
-
-
-## tenet
+El paquete `networkD3` es otra librería de gráficos de redes interactivos. Basada en `D3.js`, permite crear gráficos de redes con nodos y enlaces, y añadir interactividad a través de zoom, arrastrar y soltar, y otros efectos. Permite mucho control de la interactividad y es muy útil para visualizar redes complejas.
 
 
-### plotGrid
+### [leaflet](https://rstudio.github.io/leaflet/){target=_blank}
+
+El paquete `leaflet` es una librería de mapas interactivos. Permite crear mapas con diferentes capas, añadir marcadores, polígonos, líneas, y añadir interactividad a través de zoom, arrastrar y soltar, y otros efectos. Es muy útil para visualizar datos geoespaciales.
+
+
+### [tmap](https://mtennekes.github.io/tmap/){target=_blank}
+
+La librería `tmap` es otra librería de mapas interactivos. Consiste en una alternativa eficiente a `leaflet` para la visualización de datos geoespaciales. 
+
+
+### [tenet](https://rodrodr.github.io/tenet/){target=_blank}
+
+El paquete `tenet` es un paquete que he desarrollado para el análisis de textos en R. Contiene una serie de gráficos interactivos que permiten explorar los textos de una manera más profunda. A continuación, se muestran algunos ejemplos de gráficos.
+
+
+**forceDirecterTree**
+
+Este gráfico muestra un árbol de palabras clave con un diseño de fuerza directa. Es útil para visualizar la relación entre las palabras clave y su frecuencia en un texto.
+
+```{r}
+
+# Carga los paquetes
+library(tenet)
+library(quanteda)
+
+# Crea un objeto corpus con
+# los discursos de investidura
+# de los presidentes españoles
+cp <- corpus(spa.inaugural)
+    
+# Carga el diccionario de palabras
+dic <- dic.pol.es
+
+# Cuenta la frecuencia
+xx <- countKeywords(cp, 
+                    dic.pol.es, 
+                    rel.freq = F, 
+                    group.var = "President",
+                    quiet=T)
+
+# Agrega los resultados    
+xx <- aggregate(list(frequency=xx$frequency), 
+                by=list(groups=xx$groups, 
+                        level1=xx$level1,
+                        level2=xx$level2), 
+                sum, na.rm=T)
+
+# Crea el gráfico
+forceDirectedTree(data = xx, 
+                  height = 500, 
+                  max.radius = 40,
+                  value_col = "frequency")
+
+```
+
+
+**plotVoronoiTree**
+
+Como el gráfico anterior, este gráfico muestra un árbol de palabras clave, pero con un diseño de Voronoi. Se trata de una forma de treemap, pero con un diseño distinto.
+
+```{r}
+
+# Con los mismos datos, genera
+# un diagrama de árbol de voronoi
+plotVoronoiTree(xx, 
+                value_col = "frequency")
+
+```
+
+
+**plotGrid**
+
+La función `plotGrid` permite crear una cuadrícula de gráficos interactivos. En el siguiente ejemplo, se muestra cómo crear una cuadrícula de gráficos de dispersión interactivos con `plotGrid`.
+
 
 ```{r, fig.height=9, fig.width=8}
 
@@ -343,12 +498,198 @@ plotGrid(xx,
 
 
 
-## Otros paquetes
+**plotChord**
 
 
-NetworkD3
+La función `plotChord` permite crear un gráfico de cuerdas interactivos. En el siguiente ejemplo, se muestra cómo crear un gráfico de cuerdas con `plotChord`.
 
-leaflet
+```{r}
 
-tmap
+# Crea un corpus con los
+# discursos de investidura
+cp <- quanteda::corpus(spa.inaugural)
+
+# Carga el diccionario
+dic <- dic.pol.es
+
+# Genera los datos de las 
+# coincidencias entre los términos
+# del diccionario en el corpus
+d <- matchCodes(cp, dic, quietly = T)
+
+# Crea el gráfico de cordas
+plotChord(d, 
+          from="term1", 
+          to="term2", 
+          value="value")
+
+```
+
+
+**plotKeyness**
+
+La función `plotKeyness` permite crear un gráfico de keyness interactivos. Se trata de entender cuáles son las palabras más destacadas de un texto de referencia con relación a un corpus de otros textos.
+
+```{r}
+
+# Selecciona solo la
+# sesión 124 del corpus
+# de debates legislativos de
+# la XIV legislatura
+# "Ley del Sí es Sí"
+spa <- spa.sessions[spa.sessions$session.number==124,]
+
+# Agrega los debates por partido
+re <- aggregate(list(text=spa$speech.text), 
+                by=list(rep.party=spa$rep.party),
+                FUN=paste, 
+                collapse="\n")
+
+# Crea un corpus con los resultados
+cp <- corpus(re)
+
+# Agrupa por partido
+ci <- corpus_group(cp, groups = rep.party)
+
+# Visualiza el gráfico
+plotKeyness(corpus = ci,
+            ref.cat = "Vox", 
+            title = "")
+
+```
+
+
+**plotSpike**
+
+La función `plotSpike` permite crear un gráfico de dispersión léxica interactivo.
+
+```{r, fig.height=10, fig.width=10, eval=T}
+
+# Agrega los debates por sesión
+ag <- aggregate(list(text=spa.sessions$speech.text),
+                by=list(session_number=spa.sessions$session.number),
+                paste, 
+                collapse="\n")
+
+# Añade ceros para ordenar de modo correcto
+# las sesiones por números
+ag$session_number[nchar(ag$session_number)==1] <- 
+paste0("00", ag$session_number[nchar(ag$session_number)==1])
+
+ag$session_number[nchar(ag$session_number)==2] <- 
+paste0("0", ag$session_number[nchar(ag$session_number)==2])
+
+# Convierte los resultados en un corpus
+library(quanteda)
+cp <- corpus(ag, 
+             docid_field = "session_number")
+
+
+# Crea un diccionario con los temas
+# territorio, género y memoria
+dic <- dictionary(
+  list(Territorio=c("federal","estatuto","nacionalismo",
+                    "regionalismo","cataluña","lengua"),
+       Género=c("violencia machista","mujer","violencia sexual",
+                "aborto","reproductivo","género","\\btrans\\b"),
+       Memoria=c("memoria","franquismo","franquista","dictadura")))
+
+
+# Busca la posición de cada palabra
+# en las sesiones
+ter <- filterWords(cp, dic)
+
+# Define los nombres de las sesiones.
+ter$name <- paste0("Session ", ter$name)
+
+# Crea el gráfico
+plotSpike(data=ter, 
+          legend.title="Tema:",
+          title="Congreso de los Diputados - XIV Legislatura (2019-2023)",
+          subtitle="Territorio, género y memoria en los debates de los plenos.")
+
+```
+
+
+**plotSankey**
+
+La función `plotSankey` permite crear un gráfico interactivo de *Sankey* o de aluvión. Resulta excelente para acompañar flujos o transiciones.
+
+```{r}
+
+# Crea un corpus con los
+# discursos de investidura
+cp <- corpus(spa.inaugural)
+
+# Carga el diccionario
+dic <- dic.pol.es
+
+# Cuenta las palabras clave
+xx <- countKeywords(cp, 
+                    dic.pol.es, 
+                    rel.freq = F, 
+                    group.var = "President",
+                    quiet=T)
+
+# Agrega las frecuencias por grupo
+xx <- aggregate(list(frequency=xx$frequency), 
+                by=list(groups=xx$groups, 
+                        level1=xx$level1,
+                        level2=xx$level2), 
+                sum, na.rm=T)
+          
+# Crea el gráfico
+plotSankey(data=xx,
+           from="groups",
+           to="level1",
+           value="frequency")
+
+```
+
+
+**plotStream**
+
+La función `plotStream` permite crear un gráfico de flujo interactivo. Es ideal para visualizar la evolución de las palabras clave en un corpus a lo largo del tiempo.
+
+```{r}
+
+# Selecciona los diputaos más  
+# representativos de Vox
+ag <- spa.sessions[
+        spa.sessions$rep.name%in%
+          c("Abascal Conde, Santiago",
+            "Espinosa de los Monteros de Simón, Iván",
+            "Olona Choclán, Macarena",                
+            "Ortega Smith-Molina, Francisco Javier"),]
+
+# Crea una variable de mes para 
+# facilitar la visualización de los datos
+ag$month <- substr(ag$session.date,3,7)
+
+# Agrega las palabras por diputado
+# y mes
+ag <- aggregate(
+    list(words=ag$speech.tokens), 
+      by=list(
+        month=ag$month, 
+        rep=ag$rep.name, 
+        party=ag$rep.party), 
+      sum, 
+      na.rm=T)
+
+# Ordena los datos por mes
+ag <- ag[order(ag$month),]
+
+# Crea el gráfico
+plotStream(ag, 
+           x="month", 
+           y="words", 
+           group = "rep")
+
+
+```
+
+
+
+
 
