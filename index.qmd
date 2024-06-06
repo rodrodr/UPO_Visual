@@ -67,7 +67,6 @@ pc <- c("ggplot2","ggrepel","ggdist",
         "netrankr","igraph","reactable","RColorBrewer",
         "hrbrthemes","ggthemes","tvthemes")
 
-
 ## ACTUALIZACIÓN DE PAQUETES (PARA EL DÍA 6 DE JUNIO)
 
 pc <- c("plotly","networkD3",
