@@ -99,6 +99,14 @@ library(igraph)
 med <- florentine_m
 med <- as_edgelist(med)
 
+library(vdemdata)
+
+dem<- vdem
+
+dm <- dem[,c("country_name","year","v2x_polyarchy","v2x_libdem","v2x_partipdem","v2x_delibdem","v2x_egaldem")]
+
+names(dm) <- c("Country","Year","Electoral","Liberal","Participative","Deliberative","Egalitarian")
+
 
 co <- c("Argentina","Bolivia","Brazil","Chile","Colombia","Costa Rica","Dominican Republic","Ecuador","Honduras","Mexico","Panama","Peru","Paraguay","El Salvador","Uruguay")
 
@@ -779,6 +787,39 @@ p
 ### Dumbbell
 
 El gráfico de pesas rusas (*dumbbell*) es una variante del gráfico de líneas que permite visualizar la evolución de dos variables a lo largo del tiempo. Se compone de dos o más puntos conectados por un segmento de línea. Es útil para comparar dos valores en diferentes momentos y visualizar la evolución de la variable en el tiempo. El gráfico abajo muestra la evolución de la proporción de la riqueza concentrada por el 10% más rico de en los países de América Latina en 2000, 2010 y 2019.
+
+
+Primero, prepara los datos:
+
+```{r}
+
+
+library(vdemdata)
+
+dem<- vdem
+
+dm <- dem[,c("country_name","year","v2x_polyarchy","v2x_libdem","v2x_partipdem","v2x_delibdem","v2x_egaldem")]
+
+names(dm) <- c("Country","Year","Electoral","Liberal","Participative","Deliberative","Egalitarian")
+
+
+co <- c("Argentina","Bolivia","Brazil","Chile","Colombia","Costa Rica","Dominican Republic","Ecuador","Honduras","Mexico","Panama","Peru","Paraguay","El Salvador","Uruguay")
+
+dml <- dm[dm$Country%in%c(co,"Nicaragua","Venezuela"),]
+
+ye <- c(rep(2000,length(co)),rep(2010,length(co)),
+        rep(2020,length(co)))
+
+top <- c(37.7,47.8,47,42.6,47,35.7,40.2,45.9,41.9,42,43.2,36.8,42.1,39,35.4,31.7,36.9,42.2,38.2,43.4,36.8,36.5,37.5,40.2,37.1,39.7,34.2,40.5,33.2,33.6,30.3,32.6,39.4,35.8,42.2,37,30.5,36,34.6,35.5,38,32.9,33.3,29.8,29.9)
+
+lat <- data.frame(Country=c(co,co,co), Year=as.character(ye), Share=top)
+
+```
+
+
+
+Luego, el gráfico:
+
 
 ```{r 01_dumb, exercise=TRUE, fig.height=7, exercise.lines=47}
 
